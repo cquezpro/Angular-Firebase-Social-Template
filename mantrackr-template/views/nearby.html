@@ -1,0 +1,28 @@
+<div class="page-content-with-footer page-trans">
+	<div class="standout-container swiper-container" id="standout-container" data-ng-include="'views/common/main_standout.html'"></div>
+	
+	<div class="member-photo-grid swiper-container" id="member-photo-grid">
+		<div class="swiper-wrapper">
+			<div class="swiper-slide member-grid-cell" data-ng-repeat="member in filtered = (members | nearbyFilter:memberInfo.id | orderByDistance:memberInfo.lat:memberInfo.lng)" on-finish-render="memberPhotoGridRenderDone">
+				<img data-ng-src="{{getAppMemberPhotoThumbUrl(member.id, false)}}" class="img-responsive grid-cell-image" data-ng-click="showMemberProfilePage(member.id)"/>				
+				<div class="member-name">
+					<span class="member-looking-now-icon iconmoon-binoculars" data-ng-if="member.lookingnow == 1">
+					</span>
+					<i class="member-online" data-ng-if="member.online == true">
+					</i>&nbsp;{{member.name | filterMemberName}}
+				</div>
+				<div class="message-num" data-ng-if="memberInfo.myMessageBox[member.id].info.unread > 0">
+					<span class="iconmoon-chat-number"></span>
+					<div class="msgnum-text">
+						{{memberInfo.myMessageBox[member.id].info.unread}}
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+				
+		<div class="modal modal-flat fade" id="memberStandoutDialog" tabindex="-1" role="dialog" aria-hidden="true" data-ng-include="'views/common/standout_popup.html'"></div>
+	</div>
+</div>
+	
+<div class="page-footer" data-ng-include="'views/common/main_footer.html'" data-ng-controller="MainFooterCtrl"></div>

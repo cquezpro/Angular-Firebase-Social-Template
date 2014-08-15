@@ -1,0 +1,34 @@
+
+  .jslider_mantrackr .jslider-bg i,
+  .jslider_mantrackr .jslider-pointer { background-image: url(../img/jslider.mantrackr.png); }
+
+  .jslider_mantrackr .jslider-pointer { 
+	width: 30px;
+	height: 30px;
+	top: -14px;
+	margin-left: -14px;
+  	background-position: -2px -40px;
+}
+
+
+.jslider_mantrackr .jslider-bg .f {
+	width: 80%;
+	left: 10%;
+	background-repeat: repeat-x;
+	background-position: -20px 0px;
+}
+
+.jslider_mantrackr .jslider-bg .v {
+	background-position: 0 -20px;
+}
+
+.jslider_mantrackr .jslider-value{
+	top: 20px;
+	font-size: 20px;
+	left: -10px;
+	color: #7d7d7d;
+}
+
+.jslider_mantrackr .jslider-label{
+	display:none !important;
+}

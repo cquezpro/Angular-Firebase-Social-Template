@@ -1,0 +1,494 @@
+<div id="header-menu" class="settings-header-menu">
+	<div class="header-back-menuitem-container">
+		<a class="header-menu-item header-menu-back-item" data-ng-click="gotoBack()">
+			<span class="iconmoon-back-to-grid"></span>
+		</a>
+	</div>
+	
+	<div class="header-page-title">
+		Settings
+	</div>
+
+	<div class="clearfix"></div>
+</div>
+
+
+<div class="settings-body">
+	<div class="swiper-container swiper-vertical-container" id="settings-list-container">
+		<div class="swiper-wrapper">
+			<div class="swiper-slide">
+				<ul>
+					<li data-toggle="modal" data-target="#settingsAccountInfoDialog"><a>Account Info</a></li>
+					<li data-toggle="modal" data-target="#settingsAppPasswordRequirementsDialog"><a>App Password Requirement</a></li>
+					<li data-toggle="modal" data-target="#settingsBrowsingFiltersDialog"><a>Browsing Filters</a></li>
+					<li data-toggle="modal" data-target="#settingsDeactivateAccountDialog"><a>Deactivate my account</a></li>
+					<li data-toggle="modal" data-target="#settingsDeviceNotificationDialog"><a>Device Notifications</a></li>
+					<li data-toggle="modal" data-target="#settingsHideDistanceDialog"><a>Distance Display</a></li>
+					<li data-toggle="modal" data-target="#settingsMeasurementUnitsDialog"><a>Measurements Units</a></li>
+					<li data-toggle="modal" data-target="#settingsPremiumMembershipDialog"><a>Premium Membership</a></li>
+					<li data-toggle="modal" data-target="#standoutStatusDialog"><a>Standout Strip</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="settings-footer">
+	<div class="settings-footer-buttons">
+		<div class="link-button col-xs-4 nopadding-left-right" data-toggle="modal" data-target="#settingsFeedbackDialog"><i class="fa fa-bullhorn"></i>&nbsp;Feedback</div>
+		<div class="link-button col-xs-4 nopadding-left-right" data-toggle="modal" data-target="#settingsRateDialog"><i class="fa fa-heart"></i>&nbsp;Rate App</div>
+		<div class="link-button col-xs-4 nopadding-left-right"><i class="fa fa-share-square-o"></i>&nbsp;Share</div>
+		<div class="clearfix"></div>
+	</div>
+	<div class="settings-footer-getmore-button">
+		<button type="button" class="btn btn-block btn-orange btn-main btn-bold btn-nomargintop btn-no-texttransform btn-main-smallfont" data-ng-click="showPremiumFeatureDialog()">GET MORE. Go Premium&nbsp;<i class="fa fa-arrow-right"></i></button>
+	</div>
+</div>
+
+
+
+<!--  Settings  AccountInfo  Dialog  Begin-->
+<div class="modal modal-flat modal-vertical-center fade settings-modal" id="settingsAccountInfoDialog" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-width-70">
+    <div class="modal-content">
+      
+      <div class="modal-body modal-body-nopadding">
+      
+      	<div class="modal-title">Account Info</div>
+      	
+      	<div class="modal-body-content">
+      		<ul class="edit-list-items">
+      			<li class="sm-height" data-ng-click="showEmailEditDialog()"><span class="item-edit-icon"><i class="fa fa-pencil"></i></span>{{memberInfo.email}}</li>
+      			<li class="sm-height" data-ng-click="showPasswordChangeDialog()"><span class="item-edit-icon"><i class="fa fa-pencil"></i></span>Password</li>
+      		</ul>
+      	</div>
+      
+       	<div class="form-button-group form-button-group-nomargin">
+       		<button type="button" class="btn btn-orange btn-block btn-main btn-no-texttransform btn-small-padding btn-nomargintop" data-dismiss="modal">Close</button>
+       	</div>
+        
+      </div>
+      
+      
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	
+<!--  Settings AccountInfo  Dialog End-->
+
+
+<!--  Settings  App Password  Dialog  Begin-->
+<div class="modal modal-flat modal-vertical-center fade settings-modal" id="settingsAppPasswordRequirementsDialog" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-width-70">
+    <div class="modal-content">
+      
+      <div class="modal-body modal-body-nopadding">
+      
+      	<div class="modal-title">App Startup Password</div>
+      	
+      	<div class="modal-body-content">
+      		<ul class="edit-list-items">
+      			<li class="xm-height">
+      				<div>
+		     			<label>
+		     				<input type="checkbox">&nbsp;&nbsp;<span class="checkbox-label">Require my password</span>
+		     			</label>
+		     		</div>
+      			</li>
+      		</ul>
+      	</div>
+      
+       	<div class="form-button-group form-button-group-nomargin">
+       		<button type="button" class="btn btn-orange btn-block btn-main btn-no-texttransform btn-small-padding btn-nomargintop" data-dismiss="modal">Close</button>
+       	</div>
+        
+      </div>
+      
+      
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	
+<!--  Settings App Password  Dialog End-->
+
+
+<!--  Settings Browsing Filter Dialog Begin -->
+<div class="modal modal-flat modal-vertical-center fade settings-modal" id="settingsBrowsingFiltersDialog" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-width-70">
+    <div class="modal-content">
+      
+      <div class="modal-body modal-body-nopadding" data-ng-if="memberInfo.is_premium == 1">
+	
+      	<div class="form-group-bigpadding inline-form-group">
+      		<div class="row nomargin-bottom">
+      			<div class="col-xs-12">
+      				<select name="filterOptionsCb" class="form-control form-custom-select">
+      					<option value="0">No Filter</option>
+      					<option value="1">Filter Profiles & Messages</option>
+      				</select>
+      			</div>
+      		</div>
+      		
+      	</div>
+      	      	
+   		<div class="form-group form-group-bigpadding nomargin-bottom">
+     		<label>Age Range:</label>
+     		<div class="rangeslider-container">
+     			<input id="filterAgeRangeSlider" type="slider" name="filterAgeRangeSlider" value="18;45" />
+     		</div>
+     		<label>Distance:</label>
+     		<div class="rangeslider-container">
+     			<input id="filterDistanceRangeSlider" type="slider" name="filterDistanceRangeSlider" value="25;75" />
+     		</div>
+   		</div>
+      		    	
+       	<div class="form-button-group form-button-group-nomargin">
+       		<button type="button" class="btn btn-flat-grey btn-block btn-main btn-bold btn-no-texttransform btn-small-padding btn-main-smallfont">Save</button>
+       		<button type="button" class="btn btn-orange btn-block btn-main btn-bold btn-no-texttransform btn-small-padding btn-main-smallfont btn-nomargintop" data-dismiss="modal">Close</button>
+       	</div>
+        
+      </div>
+      
+      
+	  <div class="modal-body modal-body-nopadding" data-ng-if="memberInfo.is_premium == 0">
+	  
+	  	<div class="modal-title"><img src="img/logo-text.png" class="img-responsive img-inline-block"></div>
+      	
+      	<div class="modal-body-content">
+      		<i class="fa fa-info-circle"></i><br/>
+      		Filtering Profiles is a Premium Benefit.
+      	</div>
+      
+       	<div class="form-button-group form-button-group-nomargin">
+       		<button type="button" class="btn btn-orange btn-block btn-main btn-no-texttransform btn-small-padding btn-nomargintop" data-ng-click="showPremiumPurchaseDialog()">Upgrade Now&nbsp;<i class="fa fa-arrow-right"></i><br><small>As low as $5.99/month</small></button>
+       		<button type="button" class="btn btn-white btn-block btn-main btn-no-texttransform btn-small-padding btn-nomargintop" data-dismiss="modal">Close</button>
+       	</div>
+	  
+	  </div>
+      
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	
+<!--  Settings Browsing Filter Dialog End-->
+
+
+
+<!--  Settings  Deactivate Account  Dialog  Begin-->
+<div class="modal modal-flat modal-vertical-center fade settings-modal" id="settingsDeactivateAccountDialog" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-width-70">
+    <div class="modal-content">
+      
+      <div class="modal-body modal-body-nopadding">
+      
+      	<div class="modal-title">Deactivate my account</div>
+      	
+      	<div class="modal-body-content">
+      		If you wish to no longer appear on mantrackr, you may deactivate your account. Premium members will not receive full or partial refunds.
+      	</div>
+      
+       	<div class="form-button-group form-button-group-nomargin">
+       		<button type="button" class="btn btn-flat-grey btn-block btn-main btn-bold btn-no-texttransform btn-small-padding btn-main-smallfont">Deactivate</button>
+       		<button type="button" class="btn btn-orange btn-block btn-main btn-no-texttransform btn-small-padding btn-nomargintop" data-dismiss="modal">Close</button>
+       	</div>
+        
+      </div>
+      
+      
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	
+<!--  Settings Deactivate Account  Dialog End-->
+
+
+
+<!--  Settings  Device Notification Dialog  Begin-->
+<div class="modal modal-flat modal-vertical-center fade settings-modal" id="settingsDeviceNotificationDialog" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-width-70">
+    <div class="modal-content">
+      
+      <div class="modal-body modal-body-nopadding">
+      
+      	<div class="modal-title">Device Notifications<br/><span class="modal-small-title">Manage Status Bar and Sound Alerts</span></div>
+      	
+      	<div class="modal-body-content">
+      		<ul class="notification-list">
+      			<li><span class="enabled-icon"><i class="fa fa-eye"></i></span><span class="disabled-icon"><i class="fa fa-volume-up"></i></span>Messages</li>
+      			<li><span class="enabled-icon"><i class="fa fa-eye"></i></span><span class="disabled-icon"><i class="fa fa-volume-up"></i></span>Woofs</li>
+      			<li><span class="enabled-icon"><i class="fa fa-eye"></i></span><span class="disabled-icon"><i class="fa fa-volume-up"></i></span>Hot/Not Matches</li>
+      			<li><span class="enabled-icon"><i class="fa fa-eye"></i></span><span class="disabled-icon"><i class="fa fa-volume-up"></i></span>Gifts</li>
+      			<li><span class="enabled-icon"><i class="fa fa-eye"></i></span><span class="disabled-icon"><i class="fa fa-volume-up"></i></span>Tracks</li>
+      		</ul>
+      	</div>
+      
+       	<div class="form-button-group form-button-group-nomargin">
+       		<button type="button" class="btn btn-orange btn-block btn-main btn-no-texttransform btn-small-padding btn-nomargintop" data-dismiss="modal">Close</button>
+       	</div>
+        
+      </div>
+      
+      
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	
+<!--  Settings Device Notification Dialog End-->
+
+
+<!--  Settings  Hide Distance  Dialog  Begin-->
+<div class="modal modal-flat modal-vertical-center fade settings-modal" id="settingsHideDistanceDialog" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-width-70">
+    <div class="modal-content">
+      
+      <div class="modal-body modal-body-nopadding">
+      
+      	<div class="modal-title">Distance Display</div>
+      	
+      	<div class="modal-body-content">
+      		<ul class="edit-list-items">
+      			<li class="xm-height">
+      				<div>
+		     			<label>
+		     				<input type="checkbox">&nbsp;&nbsp;<span class="checkbox-label">Hide my distance from members</span>
+		     			</label>
+		     		</div>
+      			</li>
+      		</ul>
+      	</div>
+      
+       	<div class="form-button-group form-button-group-nomargin">
+       		<button type="button" class="btn btn-orange btn-block btn-main btn-no-texttransform btn-small-padding btn-nomargintop" data-dismiss="modal">Close</button>
+       	</div>
+        
+      </div>
+      
+      
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	
+<!--  Settings Hide Distance  Dialog End-->
+
+
+<!--  Settings  Measurement Units  Dialog  Begin-->
+<div class="modal modal-flat modal-vertical-center fade settings-modal" id="settingsMeasurementUnitsDialog" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-width-70">
+    <div class="modal-content">
+      
+      <div class="modal-body modal-body-nopadding">
+      
+      	<div class="modal-title">Measurements Units</div>
+      	
+      	<div class="modal-body-content">
+      		<div class="form-group form-group-bigpadding nomargin-bottom">
+	     		<div class="radio main-radio">
+	     			<label>
+	     				<input type="radio" name="radioMeasurementUnits">
+	     				<span class="radiobox-label">US</span>
+	     			</label>
+	     		</div>
+	     		
+	     		<div class="radio main-radio">
+	     			<label>
+	     				<input type="radio" name="radioMeasurementUnits">
+	     				<span class="radiobox-label">Canada</span>
+	     			</label>
+	     		</div>
+	     		
+	     		<div class="radio main-radio">
+	     			<label>
+	     				<input type="radio" name="radioMeasurementUnits">
+	     				<span class="radiobox-label">All Metric</span>
+	     			</label>
+	     		</div>
+	     		
+	   		</div>
+      	</div>
+      
+       	<div class="form-button-group form-button-group-nomargin">
+       		<button type="button" class="btn btn-orange btn-block btn-main btn-no-texttransform btn-small-padding btn-nomargintop" data-dismiss="modal">Close</button>
+       	</div>
+        
+      </div>
+      
+      
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	
+<!--  Settings Measurement Units  Dialog End-->
+
+<!--  Settings  Premium Membership Dialog  Begin-->
+<div class="modal modal-flat modal-vertical-center fade settings-modal" id="settingsPremiumMembershipDialog" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-width-70">
+    <div class="modal-content">
+      
+      <div class="modal-body modal-body-nopadding">
+      
+      	<div class="modal-title">Premium Membership</div>
+      	
+      	<div class="modal-body-content">
+      		<ul class="notification-list">
+      			<li>Premium Benefits</li>
+      			<li>Change Plans</li>
+      			<li>Cancel Premium</li>
+      		</ul>
+      	</div>
+      
+       	<div class="form-button-group form-button-group-nomargin">
+       		<button type="button" class="btn btn-orange btn-block btn-main btn-no-texttransform btn-small-padding btn-nomargintop" data-dismiss="modal">Close</button>
+       	</div>
+        
+      </div>
+      
+      
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	
+<!--  Settings Premium Membership Dialog End-->
+
+
+
+<!--  Settings Feedback Dialog -->
+<div class="modal modal-flat modal-vertical-center fade" id="settingsFeedbackDialog" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-width-70">
+    <div class="modal-content">
+      
+      <div class="modal-body modal-body-nopadding">
+      	
+      	<div class="form-group-bigpadding inline-form-group nopadding-bottom">
+      	
+      		<div class="row nomargin-bottom">
+      			<div class="col-xs-12">
+      				<select name="feedbackTypeCb" class="form-control form-custom-select">
+      					<option value="feedback">Feedback</option>
+      				</select>
+      			</div>
+      		</div>
+      		
+      	</div>
+      	      	      	
+   		<div class="form-group form-group-bigpadding nomargin-bottom">
+     		<textarea class="form-control form-control-innerctrl" rows="5"></textarea>
+   		</div>
+      		    	
+       	<div class="form-button-group form-button-group-nomargin">
+       		<button type="button" class="btn btn-flat-grey btn-block btn-main btn-bold btn-no-texttransform btn-small-padding btn-main-smallfont">Send</button>
+       		<button type="button" class="btn btn-orange btn-block btn-main btn-bold btn-no-texttransform btn-small-padding btn-main-smallfont btn-nomargintop" data-dismiss="modal">Cancel</button>
+       	</div>
+        
+      </div>
+
+      
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	
+<!--  Settings Feedback Dialog End-->
+
+
+<!--  Settings Rate Dialog  Begin-->
+<div class="modal modal-flat modal-vertical-center fade" id="settingsRateDialog" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-width-70">
+    <div class="modal-content">
+      <!-- Name Change -->
+      <div class="modal-body modal-body-nopadding">
+      
+      	<div class="form-group-bigpadding text-center">
+        	<img src="img/logo-text.png" class="img-responsive img-inline-block" />
+      	</div>
+		
+		<div class="rate-button-container">
+			<button type="button" class="btn btn-orange btn-block btn-main btn-no-texttransform btn-small-padding btn-main-smallfont btn-nomargintop btn-with-arrow">
+				<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><br/>
+				Rate us 5 Stars
+			</button>
+		</div>
+		
+		<div class="rate-us-description">
+			<span class="grey-text-span">THANKS FOR YOUR SUPPORT!</span><br/><br/>
+			<a class="orange-link" data-ng-click="showFeedbackDialog()">Contact us</a> to share your suggestions and requests.
+		</div>
+		      
+       	<div class="form-button-group form-button-group-nomargin">
+       		<button type="button" class="btn btn-flat-grey btn-block btn-main btn-no-texttransform btn-small-padding btn-main-smallfont" data-dismiss="modal">Close</button>
+       	</div>
+        
+      </div>
+      
+      
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	
+<!--  Settings Rate Dialog End-->
+
+
+<!--  Settings  Edit Email Dialog  Begin-->
+<div class="modal modal-flat modal-vertical-center fade settings-modal" id="settingsEditEmailDialog" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-width-70">
+    <div class="modal-content">
+      
+      <div class="modal-body modal-body-nopadding">
+      
+      	<div class="modal-title">{{memberInfo.email}}</div>
+      	
+      	<div class="modal-body-content">
+      		<div class="form-group form-group-base">
+		        <input type="email" class="form-control form-control-base" placeholder="New Email Address" data-ng-model="chg_newEmail">
+		    </div>
+		    <div class="form-group form-group-base">
+		    	<input type="email" class="form-control form-control-base" placeholder="Confirm New Email" data-ng-model="chg_newEmailConfirm">
+		    </div>
+      	</div>
+      
+       	<div class="form-button-group form-button-group-nomargin">
+       		<button type="button" class="btn btn-flat-grey btn-block btn-main btn-bold btn-no-texttransform btn-small-padding btn-main-mediumfont" data-ng-click="changeEmail()">Save New Email Address</button>
+       		<button type="button" class="btn btn-orange btn-block btn-main btn-no-texttransform btn-small-padding btn-nomargintop" data-dismiss="modal">Close</button>
+       	</div>
+        
+      </div>
+      
+      
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	
+<!--  Settings Edit Email Dialog End-->
+
+
+
+<!--  Settings  Change Password Dialog  Begin-->
+<div class="modal modal-flat modal-vertical-center fade settings-modal" id="settingsChangePasswordDialog" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-width-70">
+    <div class="modal-content">
+      
+      <div class="modal-body modal-body-nopadding">
+      	
+      	<div class="modal-body-content">
+      		<div class="form-group form-group-base">
+		        <input type="password" class="form-control form-control-base" placeholder="Existing Password" data-ng-model="chg_currentPassword">
+		    </div>
+		    <div class="form-group form-group-base">
+		    	<input type="password" class="form-control form-control-base" placeholder="New Password" data-ng-model="chg_newPassword">
+		    </div>
+		    <div class="form-group form-group-base">
+		    	<input type="password" class="form-control form-control-base" placeholder="Confirm New Password" data-ng-model="chg_newPasswordConfirm">
+		    </div>
+      	</div>
+      
+       	<div class="form-button-group form-button-group-nomargin">
+       		<button type="button" class="btn btn-flat-grey btn-block btn-main btn-bold btn-no-texttransform btn-small-padding btn-main-mediumfont" data-ng-click="changePassword()">Save New Password</button>
+       		<button type="button" class="btn btn-orange btn-block btn-main btn-no-texttransform btn-small-padding btn-nomargintop" data-dismiss="modal">Close</button>
+       	</div>
+        
+      </div>
+      
+      
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	
+<!--  Settings Change Password Dialog End-->

@@ -1,0 +1,414 @@
+<div id="header-menu" class="profile-header-menu">
+	<div class="header-back-menuitem-container">
+		<a class="header-menu-item header-menu-back-item" data-ng-click="gotoBack()">
+			<span class="iconmoon-back-to-grid"></span>
+		</a>
+	</div>
+	<div class="profilename-header-container" data-toggle="modal" data-target="#nameChangeModal">
+		<a class="profilename-header">{{memberInfo.name}} &nbsp;<i class="fa fa-pencil"></i></a>
+	</div>
+	<div class="clearfix"></div>
+</div>
+
+<div class="page-content-with-profileheader-footer">
+	
+	<ul id="profileNavTabs" class="nav nav-tabs nav-base-tabs">
+		<li class="onesecond-tab-item" data-ng-class="photoTab && 'active'"><a data-ng-click="photoTab = true">Photos</a></li>
+		<li class="onesecond-tab-item no-right-border" data-ng-class="!photoTab && 'active'"><a data-ng-click="photoTab = false">About me</a></li>
+	</ul>
+	
+	<div class="tab-content tab-base-content">
+		<div class="tab-pane fade" data-ng-class="photoTab && 'active in'" data-ng-include="'views/common/profile_photo.html'">
+		
+		</div>
+		
+		<div class="tab-pane fade" data-ng-class="!photoTab && 'active in'" data-ng-include="'views/common/profile_about.html'">
+			
+		</div>
+	</div>
+		
+</div>
+
+<div class="page-footer-absolute opacity-8">
+	<div class="notice-footer">
+		<button type="button" class="btn btn-block btn-footer-notice btn-full-height" data-ng-click="showStandoutFeatureDialog()" data-ng-if="photoTab">Get noticed on the Standout Strip&nbsp;&nbsp;<i class="fa fa-arrow-right"></i></button>
+		<button type="button" class="btn btn-block btn-footer-notice btn-full-height" data-ng-click="showStandoutStatusDialog()" data-ng-if="!photoTab"><i class="fa fa-pencil"></i>&nbsp;Standout Strip <small>(expires in 2 days)</small></button>
+	</div>
+</div>	
+
+
+
+<!--  Profile Name Change Dialog -->
+<div class="modal modal-flat modal-vertical-center fade" id="nameChangeModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-width-70">
+    <div class="modal-content">
+      <!-- Name Change -->
+      <div class="modal-body modal-body-nopadding modal-body-greyback">
+      
+      	<div class="form-group form-group-padding form-group-nomargin">
+        	<label for="profileNameTxt">My member name</label>
+        	<div class="form-group-righttop-info">15</div>
+        	<input type="text" class="form-control form-control-innerctrl" data-ng-model="member_name"/>
+      	</div>
+      
+       	<div class="form-button-group form-button-group-nomargin">
+       		<button type="button" class="btn btn-flat-grey btn-block btn-main btn-bold btn-no-texttransform btn-small-padding btn-main-smallfont" data-ng-click="saveMemberName()">Save</button>
+       		<button type="button" class="btn btn-orange btn-block btn-main btn-bold btn-no-texttransform btn-small-padding btn-main-smallfont" data-dismiss="modal">Close</button>
+       	</div>
+        
+      </div>
+      <!-- Name Change End -->
+      
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	
+<!--  Profile Name Change Dialog End-->
+
+
+
+<!--  Profile My Stats Change Dialog -->
+<div class="modal modal-flat modal-vertical-center fade" id="profileStatsChangeModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-width-70">
+    <div class="modal-content">
+      <!-- Name Change -->
+      <div class="modal-body modal-body-nopadding">
+      	
+      	<div class="form-group-bigpadding inline-form-group">
+      	
+      		<div class="row">
+      			<div class="col-xs-4 inline-form-label-container">Age</div>
+      			<div class="col-xs-6 nopadding-right">
+      				<select name="profileAgeText" class="form-control form-custom-select" data-ng-model="profile_age" data-ng-options="item.value as item.label for item in ageConstValueList">
+      				</select>
+      				
+      				<!-- <input type="text" class="form-control form-control-innerctrl input-grey-background input-text-align" data-ng-model="profile_age"> -->
+      			</div>
+      			
+      			<div class="col-xs-2 inline-form-eye-container nopadding-left-right">
+      				<a><i class="fa fa-eye"></i></a>
+      			</div>
+      		</div>
+      		
+      		<div class="row">
+      			<div class="col-xs-4 inline-form-label-container">Height</div>
+      			<div class="col-xs-6 nopadding-right">
+      			
+      				<select name="profileHeightText" class="form-control form-custom-select" data-ng-model="profile_height" data-ng-options="item.value as item.label for item in heightConstValueList">
+      				</select>
+      			
+      			</div>
+      			
+      			<div class="col-xs-2 inline-form-eye-container nopadding-left-right">
+      				<a><i class="fa fa-eye"></i></a>
+      			</div>
+      		</div>
+      		
+      		
+      		<div class="row">
+      			<div class="col-xs-4 inline-form-label-container">Weight</div>
+      			<div class="col-xs-6 nopadding-right">
+      				<select name="profileWeightText" class="form-control form-custom-select" data-ng-model="profile_weight" data-ng-options="item.value as item.label for item in weightConstValueList">
+      				</select>
+      				<!-- <input type="text" class="form-control form-control-innerctrl input-grey-background input-text-align" data-ng-model="profile_weight" >-->
+      			</div>
+      			
+      			<div class="col-xs-2 inline-form-eye-container nopadding-left-right">
+      				<a><i class="fa fa-eye"></i></a>
+      			</div>
+      		</div>
+      		
+      		<div class="row">
+      			<div class="col-xs-10 nopadding-right">
+      				<select name="profileEthnicityId" class="form-control form-custom-select" data-ng-model="profile_ethnicity" data-ng-options="item.id as item.ethnicity_value for item in ethnicityOptionList">
+      				</select>
+      			</div>
+      			
+      			<div class="col-xs-2 inline-form-eye-container nopadding-left-right">
+      				<a><i class="fa fa-eye"></i></a>
+      			</div>
+      		</div>
+      		
+      	</div>
+      	      	
+       	<div class="form-button-group form-button-group-nomargin">
+       		<button type="button" class="btn btn-flat-grey btn-block btn-main btn-bold btn-no-texttransform btn-small-padding btn-main-smallfont" data-ng-click="saveMyStatus()">Save</button>
+       		<button type="button" class="btn btn-orange btn-block btn-main btn-bold btn-no-texttransform btn-small-padding btn-main-smallfont btn-nomargintop" data-dismiss="modal">Close</button>
+       	</div>
+        
+      </div>
+
+      
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	
+<!--  Profile My Stats Change Dialog End-->
+
+
+
+<!--  Profile OpenTo Change Dialog -->
+<div class="modal modal-flat modal-vertical-center fade" id="profileOpenToChangeModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-width-70">
+    <div class="modal-content">
+      <!-- Name Change -->
+      <div class="modal-body modal-body-nopadding">
+      	
+      	<div class="form-group-bigpadding inline-form-group">
+      	
+      		<div class="row nomargin-bottom">
+      			<div class="col-xs-12">
+      				<select name="profileRelationshipStatusId" class="form-control form-custom-select" data-ng-model="profile_relationship" data-ng-options="item.id as item.relationship for item in relationshipStatusList">
+      				</select>
+      			</div>
+      		</div>
+      		
+      	</div>
+      	
+      	<hr class="orange_line"/>
+      	
+   		<div class="form-group form-group-bigpadding nomargin-bottom">
+     		<label>Open to:</label>
+     		     		
+     		<div class="checkbox main-checkbox" data-ng-repeat="opentoItem in opentoOptionList">
+     			<label>
+     				<input type="checkbox" data-ng-model="chkOpenTo[opentoItem.id]"><span class="checkbox-label">{{opentoItem.opento_value}}</span>
+     			</label>
+     		</div>
+     		
+   		</div>
+      		    	
+       	<div class="form-button-group form-button-group-nomargin">
+       		<button type="button" class="btn btn-flat-grey btn-block btn-main btn-bold btn-no-texttransform btn-small-padding btn-main-smallfont" data-ng-click="saveOpenToValues()">Save</button>
+       		<button type="button" class="btn btn-orange btn-block btn-main btn-bold btn-no-texttransform btn-small-padding btn-main-smallfont btn-nomargintop" data-dismiss="modal">Close</button>
+       	</div>
+        
+      </div>
+
+      
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	
+<!--  Profile OpenTo Change Dialog End-->
+
+
+
+<!--  Profile Looking For Change Dialog -->
+<div class="modal modal-flat modal-vertical-center fade" id="profileLookforDialog" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-width-70">
+    <div class="modal-content">
+      <!-- Name Change -->
+      <div class="modal-body modal-body-nopadding modal-body-greyback">
+      
+      	<div class="form-group form-group-padding form-group-nomargin">
+        	<label for="profileNameTxt">Looking for</label>
+        	<div class="form-group-righttop-info">300</div>
+        	<textarea class="form-control form-control-innerctrl" rows="10" data-ng-model="profile_lookfor"></textarea>
+      	</div>
+      
+       	<div class="form-button-group form-button-group-nomargin">
+       		<button type="button" class="btn btn-flat-grey btn-block btn-main btn-bold btn-no-texttransform btn-small-padding btn-main-smallfont" data-ng-click="saveLookingFor()">Save</button>
+       		<button type="button" class="btn btn-orange btn-block btn-main btn-bold btn-no-texttransform btn-small-padding btn-main-smallfont" data-dismiss="modal">Close</button>
+       	</div>
+        
+      </div>
+      
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	
+<!--  Profile Looking For Change Dialog End-->
+
+
+<!--  Profile About Me Change Dialog -->
+<div class="modal modal-flat modal-vertical-center fade" id="profileAboutMeDialog" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-width-70">
+    <div class="modal-content">
+      <!-- Name Change -->
+      <div class="modal-body modal-body-nopadding modal-body-greyback">
+      
+      	<div class="form-group form-group-padding form-group-nomargin">
+        	<label for="profileNameTxt">About Me</label>
+        	<div class="form-group-righttop-info">300</div>
+        	<textarea class="form-control form-control-innerctrl" rows="10" data-ng-model="profile_description"></textarea>
+      	</div>
+      
+       	<div class="form-button-group form-button-group-nomargin">
+       		<button type="button" class="btn btn-flat-grey btn-block btn-main btn-bold btn-no-texttransform btn-small-padding btn-main-smallfont" data-ng-click="saveDescription()">Save</button>
+       		<button type="button" class="btn btn-orange btn-block btn-main btn-bold btn-no-texttransform btn-small-padding btn-main-smallfont" data-dismiss="modal">Close</button>
+       	</div>
+        
+      </div>
+      
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	
+<!--  Profile About Me Change Dialog End-->
+
+
+
+<!--  Profile My Interests Change Dialog -->
+<div class="modal modal-flat modal-vertical-center fade" id="profileMyInterestDialog" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-width-70">
+    <div class="modal-content">
+      <!-- Name Change -->
+      <div class="modal-body modal-body-nopadding modal-body-greyback">
+      
+      	<div class="form-group form-group-padding form-group-nomargin">
+        	<label for="profileNameTxt">My interests</label>
+        	<div class="form-group-righttop-info">300</div>
+        	<textarea class="form-control form-control-innerctrl" rows="10" data-ng-model="profile_interests"></textarea>
+      	</div>
+      
+       	<div class="form-button-group form-button-group-nomargin">
+       		<button type="button" class="btn btn-flat-grey btn-block btn-main btn-bold btn-no-texttransform btn-small-padding btn-main-smallfont" data-ng-click="saveInterests()">Save</button>
+       		<button type="button" class="btn btn-orange btn-block btn-main btn-bold btn-no-texttransform btn-small-padding btn-main-smallfont" data-dismiss="modal">Close</button>
+       	</div>
+        
+      </div>
+      
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	
+<!--  Profile My Interests Change Dialog End-->
+
+
+<!--  Profile Pictures Management Dialog -->
+<div class="modal modal-flat modal-vertical-center fade" id="myPhotosDialog" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-width-70">
+    <div class="modal-content">
+      <!-- Name Change -->
+      <div class="modal-body modal-body-nopadding">
+      
+      	<div id="photo-list-container" data-ng-class="photoListViewMode == 'List' && 'opacity-10' || 'opacity-0'">
+	      	<div>
+	      		<div class="one-second"><button type="button" class="btn btn-white btn-block btn-main btn-no-texttransform btn-small-padding" data-ng-click="photos_tab_public = true"><i class="fa fa-unlock"></i>&nbsp;&nbsp;Public</button></div>
+	      		<div class="one-second"><button type="button" class="btn btn-dark-grey btn-block btn-main btn-no-texttransform btn-small-padding" data-ng-click="photos_tab_public = false"><i class="fa fa-lock"></i>&nbsp;&nbsp;Private</button></div>
+	      		<div class="clearfix"></div>
+	      	</div>
+	      	
+	      	<div class="public-photos-container" data-ng-show="photos_tab_public">
+	      	    
+	      	    <div class="profile-photo-item-container box ratio4_5" data-ng-repeat="photo in filterPublicPhotos()" data-ng-class="photo.id == memberInfo.primary_photo_id && 'primary-photo-item'">
+	      	    	<div class="content content-small-padding-bottom-right">
+	      	    		<img data-ng-src="{{photoupload_baseuri + photo.thumb_path}}" class="img-responsive profile-photo-item-item" data-ng-click="showPhotoEditDialog('Public', $index, photo.id)"/>
+	      	    	</div>
+	      	    </div>
+	      	      		
+	      		
+	      		<div class="profile-photo-item-container box ratio4_5" data-ng-repeat="i in getEmptyPublicPhotosCount()" id="newPublicPhotoBtn_{{i}}">
+	      			<div class="content content-small-padding-bottom-right">
+		      			<img src="img/addphoto_public.png" class="img-responsive profile-photo-item-item" id="newPublicPhoto_{{i}}"/>   			
+		      			<!-- <div class="empty-photo">
+			      			<div class="photo-add-button">
+			      				<i class="fa fa-plus"></i>&nbsp;<i class="fa fa-camera"></i>
+			      			</div>
+		      			</div> -->
+		      			<form>
+					     	<input type="file" name="ip-file" class="hidden-file" id="newPublicPhoto_file_{{i}}">
+					     </form>
+				     </div>
+	      		</div>
+	      		
+	     		<div class="clearfix"></div>
+	      		
+	      	</div>
+	      	
+	      	<div class="private-photos-container" data-ng-hide="photos_tab_public">
+	      	
+	      		<div class="profile-photo-item-container box ratio4_5" data-ng-repeat="photo in filterPrivatePhotos()">
+	      			<div class="content content-small-padding-bottom-right">
+	      	    		<img data-ng-src="{{photoupload_baseuri + photo.thumb_path}}" class="img-responsive profile-photo-item-item" data-ng-click="showPhotoEditDialog('Private', $index, photo.id)"/>
+	      	    	</div>
+	      	    </div>
+	      	    
+	      	    <div class="profile-photo-item-container box ratio4_5" data-ng-repeat="i in getEmptyPrivatePhotosCount()" id="newPrivatePhotoBtn_{{i}}">
+	      	    	<div class="content content-small-padding-bottom-right">
+		      			<img src="img/addphoto_private.png" class="img-responsive profile-photo-item-item" id="newPrivatePhoto_{{i}}"/>   			
+		      			<!-- <div class="empty-photo">
+			      			<div class="photo-add-button">
+			      				<i class="fa fa-plus"></i>&nbsp;<i class="fa fa-camera"></i>
+			      			</div>
+		      			</div> -->
+		      			<form>
+		      				<input type="file" name="ip-file" class="hidden-file" id="newPrivatePhoto_file_{{i}}">
+		      			</form>
+	      			</div>
+	      		</div>
+	      		      		
+	      		<div class="clearfix"></div>
+	      		
+	      	</div>
+	      
+	       	<div class="form-button-group form-button-group-nomargin">
+	       		<button type="button" class="btn btn-orange btn-block btn-main btn-bold btn-no-texttransform btn-small-padding btn-main-smallfont" data-dismiss="modal">Close</button>
+	       	</div>
+        </div>
+        
+        <div id="primaryPhotoChangeModal" data-ng-class="photoListViewMode == 'ChangePrimary' && 'opacity-10' || 'opacity-0'">
+        
+        	<h4 class="txt-orange text-center">My Primary Public Photo</h4>
+      	
+	      	<div class="primaryPhotoContainer">
+	      		
+	      		<div class="primaryPhotoContent">
+	      			<img data-ng-src="{{getMemberPhotoFullUrl(true)}}" class="img-responsive" id="primaryPhotoImgPreview"/>
+	      		</div>
+	      		
+	      		<button type="button" class="btn btn-flat-grey btn-grey-text btn-block btn-main btn-no-texttransform btn-small-padding btn-main-smallestfont" id="replacePrimaryPhotoBtn">
+	      			Replace (G-Rated Only!)
+		      		 <form>
+				     	<input type="file" name="ip-file" class="ip-file">
+				     </form>
+	      		</button>
+	      		
+	      	</div>
+	      	
+	       	<div class="form-button-group form-button-group-nomargin">
+	       		<button type="button" class="btn btn-orange btn-block btn-main btn-bold btn-no-texttransform btn-small-padding btn-main-smallfont" data-ng-click="replacePrimaryPhoto()">Save / Back</button>
+	       	</div>
+        
+        </div>
+        
+        <div id="photoChangeModal" data-ng-class="photoListViewMode == 'ChangePhoto' && (currentPhotoEditType == 'Private' && 'privatePhotoEditModalBody opacity-10' || 'opacity-10') || 'opacity-0'">
+        	
+        	<h4 class="txt-orange text-center" id="photoChangeTitle">{{currentPhotoEditTitle}}</h4>
+      	
+      		<div class="photoContainer">
+	      		
+	      	  <div class="photoContent">	
+	      	  	<img data-ng-src="{{currentPhotoDeleted && assets_imagebaseuri + 'avatars/noimage.jpg' || currentPhotoEditUrl}}" class="img-responsive"/>
+	      	  </div>
+	      	  
+	      	  <div class="btn-group btn-action-group">	      		
+				  <button type="button" class="btn btn-flat-grey dropdown-toggle btn-grey-text btn-main btn-block btn-small-padding btn-main-smallfont" data-toggle="dropdown">
+				    <i class="fa fa-unlock" data-ng-class="currentPhotoEditType == 'Public' && 'fa-unlock' || 'fa-lock'"></i>&nbsp;{{currentPhotoEditType}}&nbsp;<span class="caret"></span>
+				  </button>
+				  
+				  <ul class="dropdown-menu" role="menu">
+				    <li><a data-ng-click="currentPhotoEditType = 'Public'"><i class="fa fa-unlock"></i>&nbsp;Public&nbsp;</a></li>
+				    <li><a data-ng-click="currentPhotoEditType = 'Private'"><i class="fa fa-lock"></i>&nbsp;Private&nbsp;</a></li>
+				  </ul>
+			  </div>
+			  
+			  <button type="button" class="btn btn-flat-grey btn-grey-text btn-main btn-small-padding btn-main-smallfont btn-delete" data-ng-click="currentPhotoDeleted = true"><i class="fa fa-trash-o"></i></button>
+				
+	      	</div>
+	      	
+	       	<div class="form-button-group form-button-group-nomargin">
+	       		<button type="button" class="btn btn-orange btn-block btn-main btn-bold btn-no-texttransform btn-small-padding btn-main-smallfont" data-ng-click="saveCurrentProfilePhoto()">Save / Back</button>
+	       	</div>
+        
+        
+        </div>
+        
+      </div>
+      
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	
+<!--  Profile Pictures Management Dialog End-->

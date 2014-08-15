@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html ng-app="mantrackrApp" data-ng-controller="RootCtrl" class="body-full-height"> 
+  <head>
+    <title>Mantrackr App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-fileupload.css" rel="stylesheet">
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <link href="css/icomoon.css" rel="stylesheet">
+    <link href="css/idangerous.swiper.css" rel="stylesheet">
+    <link href="css/jquery.mobile.custom.structure.css" rel="stylesheet">
+    <link href="css/imgPicker.css" rel="stylesheet">
+	<link href="css/jquery.Jcrop.css" rel="stylesheet">
+    <link href="css/jslider.css" rel="stylesheet">
+    <link href="css/jslider.mantrackr.css" rel="stylesheet">
+	<link href="css/main.css" rel="stylesheet">
+	
+	<style>
+	[data-ng-cloak] {
+	    display: none;
+	}
+	</style>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  
+  </head>
+  <body data-ng-cloak data-ng-controller="IndexCtrl" class="body-full-height">
+    
+    <div id="splash-screen" class="row nomargin-left-right" data-ng-show="splash_show">
+		<div id="splash-image-container" class="col-md-12"> 
+			<img src="img/splash.png" class="img-responsive" alt="Mantrackr Splash Image" />
+		</div>
+		<div id="splash-logo">
+			<img src="img/logo-orange.png" class="img-responsive" alt="Mantrackr Splash Logo" />
+		</div>
+		<div id="loadingbar-container">
+			<img src="img/loading.gif" class="img-responsive" alt="Mantrackr Loading Bar" />
+		</div>
+	</div>
+    
+	<div id="home-screen" class="row nomargin-left-right" data-ng-hide="splash_show || userLoggedIn">
+		<div id="guy-image-container" class="col-md-12">
+			<img src="img/guy.png" class="img-responsive" alt="Mantrackr Home Image" />
+		</div>
+		<div id="home-logo">
+			<img src="img/logo-white.png" class="img-responsive" alt="Mantrackr Home Logo" />
+		</div>
+		
+		
+		
+		<!--  Login  -->
+		<div class="modal modal-flat fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true" data-ng-controller="LoginCtrl">
+		  <div class="modal-dialog">
+		    <div class="modal-top-bar"><a href="#" class="back-link" data-ng-click="hideLoginDialog()"><i class="fa fa-arrow-left"></i></a></div>
+		    <div class="modal-content">
+		      <!-- Login -->
+		      <div class="modal-body modal-body-login" data-ng-hide="forgotPasswordModal">
+		        <div class="form-group form-group-base">
+		        	<input type="text" class="form-control form-control-base" placeholder="Email Address" data-ng-model="email" />
+		        </div>
+		        <div class="form-group form-group-base">
+		        	<input type="password" class="form-control form-control-base" placeholder="Password" data-ng-model="password"/>
+		        </div>
+		        
+	        	<div class="form-button-group form-button-group-nomargin">
+	        		<button type="button" class="btn btn-flat-grey btn-grey-text btn-block btn-main btn-bold btn-small-padding" data-ng-click="login()">find guys&nbsp;&nbsp;<i class="fa fa-arrow-circle-right"></i></button>
+	        		<button type="button" class="btn btn-flat-white btn-block btn-main btn-no-texttransform btn-main-smallfont btn-small-padding" data-ng-click="forgotPasswordModal = true">Forgotten your password?</button>
+	        	</div>
+		        
+		      </div>
+		      <!-- Login End -->
+		      
+		      <!-- Forgot Password -->
+		      <div class="modal-body modal-body-forgotpassword" data-ng-show="forgotPasswordModal">
+		      	<p class="text-center dialog-top-description">Enter the email address attached to your account:</p>
+		        <div class="form-group form-group-base">
+		        	<input type="email" class="form-control form-control-base" placeholder="Email Address" data-ng-model="forgot_password_email" />
+		        </div>
+		        
+	        	<div class="form-button-group form-button-group-nomargin form-button-group-margin-top">
+	        		<button type="button" class="btn btn-flat-grey btn-grey-text btn-block btn-main btn-bold btn-small-padding btn-main-mediumfont" data-ng-click="resetPassword()">Send Password&nbsp;&nbsp;<i class="fa fa-arrow-circle-right"></i></button>
+	        	</div>
+		        
+		      </div>
+		      <!-- Forgot Password End -->
+		      
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		<!--  Login  End-->
+		
+		<!--  Registration  -->
+		<div class="modal modal-flat fade" id="registrationModal" tabindex="-1" role="dialog" aria-hidden="true" data-ng-controller="RegisterCtrl" >
+		  <div class="modal-dialog">
+		    <div class="modal-top-bar" data-ng-hide="regStep2"><a href="#" class="back-link" data-dismiss="modal"><i class="fa fa-arrow-left"></i></a></div>
+		    <div class="modal-top-bar-empty" data-ng-show="regStep2"></div>
+		    <div class="modal-content">
+		      <!-- Step 1 -->
+		      <div class="modal-body modal-body-forgotpassword" data-ng-hide="regStep2">
+		        <div class="form-group form-group-base">
+		        	<input type="email" class="form-control form-control-base" placeholder="Email Address" data-ng-model="email"/>
+		        </div>
+		        <div class="form-group form-group-base">
+		        	<input type="password" class="form-control form-control-base" placeholder="Password" data-ng-model="password"/>
+		        </div>
+		        <div class="form-group form-group-base">
+		        	<input type="password" class="form-control form-control-base" placeholder="Confirm Password" data-ng-model="confirm_password"/>
+		        </div>
+	        	<div class="form-button-group form-button-group-nomargin">
+	        		<button type="button" class="btn btn-flat-grey btn-grey-text btn-block btn-main btn-bold btn-small-padding" data-ng-click="register()">Step 2 of 2&nbsp;&nbsp;<i class="fa fa-arrow-circle-right"></i></button>
+	        	</div>
+		        
+		      </div>
+		      <!-- Step1 End -->
+		      
+		      <!-- Step 2 -->
+		      <div class="modal-body modal-body-register" data-ng-show="regStep2">
+		      	
+		      	<div class="form-group ">
+		      		<div id="cropper2"></div>
+		      		<div class="btn btn-orange btn-add-photo btn-block btn-main" id="addPrimaryPhotoBtn" data-ng-class="primaryPhotoSelected && 'btn-photoselected'">
+		      		
+		      			<span data-ng-hide="primaryPhotoSelected"><i class="fa fa-camera"></i>&nbsp;&nbsp;Add a G-rated Primary Photo</span>
+		      			
+		      			<div class="photoupload-preview" data-ng-show="primaryPhotoSelected"> 
+			      			<div class="avatar-preview" ><img src="img/test/01.png" class="img-responsive" id="avatar_preview"/></div>
+			      			<button type="button" class="btn btn-flat-white btn-main btn-dark-grey-text"><i class="fa fa-pencil"></i></button>
+			      		</div>
+			      		
+		      			<form>
+		      				<input type="file" name="ip-file" class="ip-file">
+		      			</form>
+		      			
+		      		</div>
+		      		
+		      		<!-- <button type="button" class="btn btn-orange btn-add-photo btn-block btn-main" id="addPrimaryPhotoBtn"><i class="fa fa-camera"></i>&nbsp;&nbsp;Add a G-rated Primary Photo</button> -->
+		      			      		
+		      		
+		      		
+		      		<!-- <div class="fileupload fileupload-new" data-provides="fileupload">
+		      			<div class="fileupload-preview fileupload-exists thumbnail" style="width: 60px; height: 80px">
+		      				
+		      			</div>
+		      			
+		      			<span class="btn btn-orange btn-add-photo">
+		      				<span class="fileupload-new"><i class="fa fa-camera"></i>&nbsp;&nbsp;Add a G-rated Primary Photo</span>
+		      			</span>
+		      			
+		      			<div class="photoupload-preview">
+		      				
+		      			</div>
+		      				
+		      			<div class="fileupload fileupload-exists">
+			      			<div class="fileupload-preview fileupload-exists thumbnail" style="width: 60px; height: 80px; line-height: 72px;"><img src="img/test01.jpg" /></div>
+			      			<span class="btn btn-file btn-orange btn-add-photo">
+			      				<span class="fileupload-exists"><i class="fa fa-pencil"></i></span>
+			      			</span>   	
+		      			</div>
+
+		      		</div> -->
+		      		
+		      	</div>
+		      	
+		      	<!-- <div class="form-group">
+		      		<button type="button" class="btn btn-orange form-control btn-add-photo fileupload-new"><i class="fa fa-camera"></i>&nbsp;&nbsp;Add a G-rated Primary Photo</button>
+		      	</div> -->
+		      	
+		      	<div class="form-group text-center form-group-small-margin-bottom">
+		      		<label><input type="checkbox" class="medium-checkbox" data-ng-model="termsChk"/><span class="checkbox_label">&nbsp;&nbsp;I am over the age of 18</span></label>
+		      	</div>
+		        <p class="text-center">
+		        	By continuing, you're confirming that you've read our <span class="text-orange">Terms and Conditions</span>
+		        </p>
+		        
+	        	<div class="form-button-group form-button-group-nomargin">
+	        		<button type="button" class="btn btn-flat-grey btn-grey-text btn-block btn-main btn-bold btn-small-padding btn-main-mediumfont" data-ng-click="register_step2_v2()">Add my profile&nbsp;&nbsp;<i class="fa fa-arrow-circle-right"></i></button>
+	        	</div>
+		        
+		      </div>
+		      <!-- Step 2 End -->
+		      
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		  
+		  <div class="modal-footer-content" data-ng-show="regStep2">
+		  	<p class="modal-footer-icon">
+		  		<i class="fa fa-exclamation-circle"></i>
+		  	</p>
+		  	<p class="modal-footer-description">
+		  		Your Primary Photo must remain G-Rated to comply with Apple's app photo guidelines, regardless of your device type.
+		  	</p>
+		  </div>
+		  
+		</div><!-- /.modal -->
+		
+		<!--  Registration  End-->
+		
+		
+		<!--  Photo Select Option Modal -->
+		<div class="modal modal-flat modal-vertical-center fade" id="photoSelectOptionModal" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-width-70">
+		    <div class="modal-content">
+		      
+		      <div class="modal-body modal-body-nopadding modal-body-orange">
+		      	
+		      	<div class="form-button-group form-button-group-nomargin">
+	        		<button type="button" class="btn btn-flat-white btn-block btn-main btn-no-texttransform btn-small-padding btn-main-mediumfont btn-dark-grey-text btn-padding-leftright"><i class="fa fa-folder-open"></i>&nbsp;&nbsp;Photo From Library</button>
+	        		<button type="button" class="btn btn-flat-white btn-block btn-main btn-no-texttransform btn-small-padding btn-main-mediumfont btn-dark-grey-text btn-padding-leftright"><i class="fa fa-camera"></i>&nbsp;&nbsp;Take Photo</button>
+	        	</div>
+		        
+		      </div>
+		      
+		      
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
+		<!--  Photo Select Option Modal End -->
+		
+		
+		
+		<div id="home-button-group">
+			<button type="button" class="btn btn-flat-white btn-block btn-main" data-toggle="modal" data-target="#loginModal">Log in&nbsp;&nbsp;<i class="fa fa-arrow-circle-right"></i></button>
+			<button type="button" class="btn btn-flat-grey btn-block btn-main btn-no-margin" data-toggle="modal" data-target="#registrationModal">Join Free</button>
+		</div>
+	
+	</div>
+	
+	<div id="wraper" data-ng-show="userLoggedIn && !splash_show">
+		
+		<div id="header-menu" data-ng-show="showMainHeader">
+			<div class="pull-left header-menu-item-container">
+				<a class="header-menu-item" data-ng-click="showLeftMenuPanel()"><i class="fa fa-bars"></i>&nbsp;&nbsp;{{currentPageTitle}}</a>
+			</div>
+			<div class="pull-right header-menu-item-container icon-only-menu-item-container">
+				<a class="header-menu-item" data-ng-click="showActivityPanel()"><i class="fa fa-dashboard"></i>&nbsp;</a>
+			</div>
+			<div class="header-logo-container">
+				<img src="img/logo-text.png" class="img-responsive" alt="Mantrackr Header Logo" data-ng-hide="isStandoutPopupDialogShown"/>
+				<div class="standout-purchase-link" data-ng-show="isStandoutPopupDialogShown" data-ng-click="showStandoutFeatureDialogFromTop();">
+					<div class="small-grey-text">Put me on the</div>
+					<div class="emphasis-text">Standout Strip</div>
+				</div>
+				
+			</div>
+			<div class="clearfix"></div>
+		</div>
+				
+		<div data-ng-class="showMainHeader && 'main-content' || 'main-content-noheader'">
+			<!--  Left Menu start -->
+			<div data-role="panel" id="leftMenuPanel" class="ui-panel-closed">
+				
+				<div id="leftMenuContainerSwiper" class="swiper-container swiper-vertical-container">
+					
+					<div class="swiper-wrapper">
+						<div class="swiper-slide">
+			
+					  		<ul class="menu-container" id="dynamic-left-menu-container">
+					  			<li data-mnu-id="mnu-nearby" data-ng-class="currentPath == '/nearby' && 'active'"><a href="nearby" data-ng-click="hideLeftMenuPanel()"><span class="iconmoon-locator2 main-left-menu-item"></span>&nbsp;&nbsp;Nearby</a></li>
+					  			<li data-mnu-id="mnu-global" data-ng-class="currentPath == '/global' && 'active'"><a href="global" data-ng-click="hideLeftMenuPanel()"><i class="fa fa-globe"></i>&nbsp;&nbsp;Global</a></li>
+					  			<li style="display:none;" data-mnu-id="mnu-online" data-ng-class="currentPath == '/online' && 'active'"><a href="online" data-ng-click="hideLeftMenuPanel()"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;Online</a></li>
+					  			<li style="display:none;"  data-mnu-id="mnu-looking" data-ng-class="currentPath == '/looking' && 'active'"><a href="looking" data-ng-click="hideLeftMenuPanel()"><span class="iconmoon-binoculars"></span><span class="looking-now-menu-text">&nbsp;&nbsp;Looking Now</span></a></li>
+					  			<li data-mnu-id="mnu-favorites" data-ng-class="currentPath == '/favorites' && 'active'"><a href="favorites" data-ng-click="hideLeftMenuPanel()"><i class="fa fa-star"></i>&nbsp;&nbsp;Favorites</a></li>
+					  			<li data-mnu-id="mnu-chats" data-ng-class="currentPath == '/chats' && 'active'"><a href="chats" data-ng-click="hideLeftMenuPanel()"><i class="fa fa-comment"></i>&nbsp;&nbsp;Chats</a></li>
+					  			<li data-mnu-id="mnu-woofs" data-ng-class="currentPath == '/woofs' && 'active'"><a href="woofs" data-ng-click="hideLeftMenuPanel()"><span class="iconmoon-woof2"></span>&nbsp;&nbsp;Woofs</a></li>
+					  			<li data-mnu-id="mnu-tracks" data-ng-class="currentPath == '/tracks' && 'active'"><a href="tracks" data-ng-click="hideLeftMenuPanel()"><i class="fa fa-eye"></i>&nbsp;&nbsp;Tracks</a></li>
+					  			<li data-mnu-id="mnu-hot" data-ng-class="currentPath == '/hotNot' && 'active'"><a href="hotNot" data-ng-click="hideLeftMenuPanel()"><i class="fa fa-fire"></i>&nbsp;&nbsp;Hot/Not</a></li>
+					  		</ul>
+					  		
+					  		<ul class="menu-container orange-menu-container">
+					  			<li><a data-ng-click="showPremiumFeatureDialog()"><i class="fa fa-arrow-right"></i>&nbsp;&nbsp;Go premium</a></li>
+					  			<li class="smaller-menu-item"><a data-ng-click="showMenuReorderDialog()"><i class="fa fa-random"></i>&nbsp;&nbsp;Re-order menu</a></li>
+					  			<li><a data-ng-click="goOffline()"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Go Offline</a></li>
+					  			<li><a href="test" data-ng-click="hideLeftMenuPanel()">Test</a></li>
+					  		</ul>
+		  				
+		  				</div>
+		  			</div>
+		  		
+		  		</div>
+		  		
+			</div>
+			
+			<!--  LEft Menu End -->
+			
+			<!--  Activity Menu Start -->
+			<div data-role="panel" id="activityPanel" class="ui-panel-closed" data-ng-include="'views/activity.html'">			
+		  		
+			</div>
+			
+			<!-- Activity Menu End -->
+						
+			<div data-ng-view class="main-content-area">
+			
+								
+			</div>
+
+		</div>	
+		
+		
+		<!--  Logout Dialog  Begin-->
+		<div class="modal modal-flat modal-vertical-center fade" id="logoutModal" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-width-70">
+		    <div class="modal-content">
+		      <!-- Name Change -->
+		      <div class="modal-body modal-body-nopadding">
+		      
+		      	<div class="form-group-bigpadding text-center">
+		        	<img src="img/logo-text.png" class="img-responsive img-inline-block" />
+		      	</div>
+		      
+		       	<div class="form-button-group form-button-group-nomargin">
+		       		<button type="button" class="btn btn-flat-grey btn-block btn-main btn-no-texttransform btn-small-padding btn-main-smallfont" data-ng-click="logout()">Go Offline</button>
+		       		<button type="button" class="btn btn-orange btn-block btn-main btn-no-texttransform btn-small-padding btn-main-smallfont btn-nomargintop" data-dismiss="modal">Cancel</button>
+		       	</div>
+		        
+		      </div>
+		      
+		      
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+			
+		<!--  Logout Dialog End-->
+		
+		
+		
+		<!--  Looking Now Dialog  Begin-->
+		<div class="modal modal-flat modal-vertical-center fade" id="lookingNowModal" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-width-70">
+		    <div class="modal-content">
+		      
+		      <div class="modal-body modal-body-nopadding">
+		      
+		      	<div class="modal-title"><span class="iconmoon-binoculars"></span>&nbsp;I'm Looking Now</div>
+		      	
+		      	<div class="modal-body-content">
+		      		
+			        	<div class="onoffswitch" style="margin: 0 auto;">
+						    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+						    <label class="onoffswitch-label" for="myonoffswitch">
+						        <div class="onoffswitch-inner"></div>
+						        <div class="onoffswitch-switch"></div>
+						    </label>
+						</div>
+						
+		      	</div>
+		      
+		       	<div class="form-button-group form-button-group-nomargin">
+		       		<button type="button" class="btn btn-orange btn-block btn-main btn-no-texttransform btn-small-padding btn-nomargintop" data-dismiss="modal">Save</button>
+		       	</div>
+		        
+		      </div>
+		      
+		      
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+			
+		<!--  Looking Now Dialog End-->
+		
+		
+		
+		
+		<!--  Search  Dialog  Begin-->
+		<div class="modal modal-flat modal-vertical-center fade" id="searchMembersModal" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-width-70">
+		    <div class="modal-content">
+		      
+		      <div class="modal-body modal-body-nopadding">
+		      
+		      	<div class="modal-title">Search members by name:</div>
+		      	
+		      	<div class="modal-body-content">
+		      		
+		      		<div class="message-input-wrapper disp_block">
+       					<div class="form-group form-group-base-messageinput form-control-displayascell">
+       						<input type="text" class="form-control form-control-messagebase" />
+       						<span class="reset-input-icon"><i class="fa fa-times-circle"></i></span>
+       					</div>
+       					<div class="search-btn" data-ng-click="doSimpleSearch()"><i class="fa fa-search"></i></div>
+					</div>
+			        	
+						
+		      	</div>
+		      
+		       	<div class="form-button-group form-button-group-nomargin">
+		       		<button type="button" class="btn btn-flat-grey btn-block btn-main btn-no-texttransform btn-small-padding btn-nomargintop btn-main-smallfont" data-ng-click="doAdvancedSearch()">Advanced Search<br/><small>(profile info &amp; message history)</small></button>
+		       		<button type="button" class="btn btn-orange btn-block btn-main btn-no-texttransform btn-small-padding btn-nomargintop" data-dismiss="modal">Close</button>
+		       	</div>
+		        
+		      </div>
+		      
+		      
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+			
+		<!--  Search Dialog End-->
+		
+		
+		<!--  Location  Dialog  Begin-->
+		<div class="modal modal-flat modal-vertical-center fade" id="locationDialog" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-width-70">
+		    <div class="modal-content">
+		      
+		      <div class="modal-body modal-body-nopadding">
+		      
+		      	<div class="modal-title"></div>
+		      	
+		      	<div class="modal-body-content">
+		      		
+		      		<div class="geolocation-info">
+		      			{{tempLocationLat}} / {{tempLocationLng}}
+		      		</div>
+		      		
+		      		<div class="location-input-wrapper">
+		      			<div class="form-group form-group-base-locationinput">
+		      				<span class="location-pin-icon"><i class="fa fa-map-marker"></i></span>
+       						<input type="text" class="form-control form-control-messagebase form-control-locationbox" id="locationInputBox" data-ng-model="tempLocationAddress"/>
+       						<span class="location-dropdown-pin-icon"><i class="fa fa-caret-down"></i></span>
+       					</div>
+		      		</div>
+						
+		      	</div>
+ 		      
+		       	<div class="form-button-group form-button-group-nomargin">
+		       		<button type="button" class="btn btn-flat-grey btn-block btn-main btn-no-texttransform btn-small-padding btn-nomargintop btn-main-mediumfont" data-ng-click="updateProfileLocation()">Change location</button>
+		       		<button type="button" class="btn btn-orange btn-block btn-main btn-no-texttransform btn-small-padding btn-nomargintop" data-dismiss="modal">Cancel</button>
+		       	</div>
+		        
+		      </div>
+		      
+		      
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+			
+		<!--  Location Dialog End-->
+		
+		<!--  Menu Reorder Dialog  Begin-->
+		<div class="modal modal-flat modal-vertical-center fade" id="menuReorderDialog" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-width-70">
+		    <div class="modal-content">
+		      
+		      <div class="modal-body modal-body-nopadding">
+		      
+		      	<div class="modal-body-content">		      
+		      		<div class="swiper-container swiper-vertical-container" id="menu-reorder-container-list">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide">
+					      		<ul class="menu-container" id="slippylist">
+						  			<li class="demo-no-swipe" data-mnu-id="mnu-nearby"><a><span class="iconmoon-locator2 main-left-menu-item"></span>&nbsp;&nbsp;Nearby</a><span class="move-handler instant"><i class="fa fa-th"></i></span></li>
+						  			<li class="demo-no-swipe" data-mnu-id="mnu-global"><a><i class="fa fa-globe"></i>&nbsp;&nbsp;Global</a><span class="move-handler instant"><i class="fa fa-th"></i></span></li>
+						  			<li class="demo-no-swipe" data-mnu-id="mnu-online"><a><i class="fa fa-clock-o"></i>&nbsp;&nbsp;Online</a><span class="move-handler instant"><i class="fa fa-th"></i></span></li>
+						  			<li class="demo-no-swipe" data-mnu-id="mnu-looking"><a><span class="iconmoon-binoculars"></span><span class="looking-now-menu-text">&nbsp;&nbsp;Looking Now</span></a><span class="move-handler instant"><i class="fa fa-th"></i></span></li>
+						  			<li class="demo-no-swipe" data-mnu-id="mnu-favorites"><a><i class="fa fa-star"></i>&nbsp;&nbsp;Favorites</a><span class="move-handler instant"><i class="fa fa-th"></i></span></li>
+						  			<li class="demo-no-swipe" data-mnu-id="mnu-chats"><a><i class="fa fa-comment"></i>&nbsp;&nbsp;Chats</a><span class="move-handler instant"><i class="fa fa-th"></i></span></li>
+						  			<li class="demo-no-swipe" data-mnu-id="mnu-woofs"><a><span class="iconmoon-woof2"></span>&nbsp;&nbsp;Woofs</a><span class="move-handler instant"><i class="fa fa-th"></i></span></li>
+						  			<li class="demo-no-swipe" data-mnu-id="mnu-tracks"><a><i class="fa fa-eye"></i>&nbsp;&nbsp;Tracks</a><span class="move-handler instant"><i class="fa fa-th"></i></span></li>
+						  			<li class="demo-no-swipe" data-mnu-id="mnu-hot"><a><i class="fa fa-fire"></i>&nbsp;&nbsp;Hot/Not</a><span class="move-handler instant"><i class="fa fa-th"></i></span></li>
+						  		</ul>
+						  	</div>
+						</div>
+					</div>
+		      	</div>
+		      
+		       	<div class="form-button-group form-button-group-nomargin">
+		       		<button type="button" class="btn btn-orange btn-block btn-main btn-no-texttransform btn-small-padding btn-nomargintop" data-ng-click="saveMenuOrderSettings()">Done</button>
+		       	</div>
+		      
+		      </div>
+		      
+		      
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+			
+		<!--  Menu Reorder Dialog End-->
+		
+		
+		<!--  Premium Feature  Dialog  Begin-->
+		<div class="modal modal-flat modal-vertical-center fade" id="premiumFeatureDialog" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-width-70">
+		    <div class="modal-content">
+		      
+		      <div class="modal-body modal-body-nopadding">
+		      
+		      	<div class="modal-title">
+		      		<img class="img-responsive" src="img/premium_icon.png" />		   
+		      		<div class="back-arrow" data-dismiss="modal">
+		      			<span class="iconmoon-back-to-grid-simple"></span>
+		      		</div>   		
+		      	</div>
+		      	
+		      	<div class="modal-body-content">
+		      		<div class="sub-header">Benefits</div>		      				        	
+					<ul class="feature-list">
+						<li>View Unlimited Profiles</li>
+						<li>Unlimited Message History</li>
+						<li>Browse in Stealth Mode</li>
+						<li>Browsing & Message Filters</li>
+						<li>Unlimited Member Blocking</li>
+						<li>Unlimited Member Favorites</li>
+					</ul>	
+		      	</div>
+		      
+		       	<div class="form-button-group form-button-group-nomargin">
+		       		<button type="button" class="btn btn-orange btn-block btn-main btn-no-texttransform btn-small-padding btn-nomargintop" data-ng-click="showPremiumPurchaseDialog()">Upgrade Now&nbsp;<i class="fa fa-arrow-right"></i><br/><small>As low as $5.99/month</small></button>
+		       	</div>
+		        
+		      </div>
+		      
+		      
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+			
+		<!--  Premium Feature  Dialog End-->
+		
+		<!--  Premium Purchase  Dialog  Begin-->
+		<div class="modal modal-flat modal-vertical-center fade" id="premiumPurchaseDialog" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-full-screen">
+		    <div class="modal-content">
+		      
+		      <div class="modal-body modal-body-nopadding">
+		      
+		      	<div class="modal-title">
+		      		<span class="iconmoon-back-to-grid-simple" data-ng-click="backToPremiumFeatureDialog()"></span><img class="img-responsive" src="img/logo-text.png" data-ng-click="backToPremiumFeatureDialog()"/>
+		      	</div>
+		      	
+		      	<div class="modal-body-content">
+		      		<div class="sub-header">
+		      			<div class="small-sub-header">Upgrade your experience to:</div>
+		      			<div class="img-sub-header"><img src="img/premium_icon2.png" class="img-responsive" /></div>
+		      		</div>		      		
+		      		<div class="premium-option-list-container">
+		      			<ul class="purchase-option-list">
+							<li data-ng-click="showPremiumPayOptionDialog()">
+								<div class="price-info">$5.99</div>
+								<div class="misc-info">
+									<span class="savings">58% SAVINGS</span><br/>
+									<span class="periods"><i class="fa fa-calendar"></i>&nbsp;per month for 12 months</span><br/>
+									<span class="packageprice">Package price @$59.88</span>
+								</div>
+								<div class="clearfix"></div>
+							</li>
+							<li data-ng-click="showPremiumPayOptionDialog()">
+								<div class="price-info">$7.99</div>
+								<div class="misc-info">
+									<span class="savings">38% SAVINGS</span><br/>
+									<span class="periods"><i class="fa fa-calendar"></i>&nbsp;per month for 6 months</span><br/>
+									<span class="packageprice">Package price @$35.94</span>
+								</div>
+								<div class="clearfix"></div>
+							</li>
+							<li data-ng-click="showPremiumPayOptionDialog()">
+								<div class="price-info">$9.99</div>
+								<div class="misc-info">
+									<span class="savings">28% SAVINGS</span><br/>
+									<span class="periods"><i class="fa fa-calendar"></i>&nbsp;per month for 3 months</span><br/>
+									<span class="packageprice">Package price @$23.97</span>
+								</div>
+								<div class="clearfix"></div>
+							</li>
+							<li data-ng-click="showPremiumPayOptionDialog()">
+								<div class="price-info">$11.99</div>
+								<div class="misc-info">
+									<span class="savings">NOT SURE?</span><br/>
+									<span class="periods"><i class="fa fa-calendar"></i>&nbsp;1 month subscriptions</span><br/>
+									<span class="packageprice">Try it out!</span>
+								</div>
+								<div class="clearfix"></div>
+							</li>
+						</ul>
+		      		</div>		        	
+						
+		      	</div>
+		      
+		       	<div class="modal-static-footer">
+		       		Your subscription will automatically renew until it's canceled. You may easily cancel at any time.
+		       		<br/><br/>
+		       		<i class="fa fa-gear"></i>Settings > Premium Membership > Cancel
+		       	</div>
+		        
+		      </div>
+		      
+		      
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+			
+		<!--  Premium Purchase  Dialog End-->
+		
+		
+		<!--  Premium Pay Option  Dialog  Begin-->
+		<div class="modal modal-flat modal-vertical-center fade" id="premiumPayOptionDialog" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-width-70">
+		    <div class="modal-content">
+		       
+		      <div class="modal-body modal-body-nopadding">
+		      
+		      	<div class="modal-title">
+		      		<img class="img-responsive" src="img/premium_icon.png" />		   
+		      		<div class="back-arrow" data-ng-click="backToPremiumPurchaseDialog()">
+		      			<span class="iconmoon-back-to-grid-simple"></span>
+		      		</div>   		
+		      	</div>
+		      	
+		      	<div class="modal-body-content">
+		      		<div class="sub-header">Membership</div>		      				        	
+					<div class="form-group form-group-bigpadding nomargin-bottom">
+			     		<label class="optionlist-header">3 months free! learn more&nbsp;<i class="fa fa-arrow-right"></i></label>
+			     		     		
+			     		<div class="radio main-radio">
+			     			<label>
+			     				<input type="radio" name="radioPaymentOption"/>
+			     				<span class="radiobox-label">Cell phone bill</span>
+			     			</label>
+			     		</div>
+			     		
+			     		<div class="radio main-radio">
+			     			<label>
+			     				<input type="radio" name="radioPaymentOption"/>
+			     				<span class="radiobox-label">Google Wallet</span>
+			     			</label>
+			     		</div>
+			     		
+			     		<div class="radio main-radio">
+			     			<label>
+			     				<input type="radio" name="radioPaymentOption"/>
+			     				<span class="radiobox-label">Credit Card</span>
+			     			</label>
+			     		</div>
+			     		
+			     		<div class="radio main-radio">
+			     			<label>
+			     				<input type="radio" name="radioPaymentOption" />
+			     				<span class="radiobox-label">Paypal</span>
+			     			</label>
+			     		</div>
+			   		</div>
+		      	</div>
+		      
+		       	<div class="form-button-group form-button-group-nomargin">
+		       		<button type="button" class="btn btn-orange btn-block btn-main btn-no-texttransform btn-small-padding btn-nomargintop" data-ng-click="showPremiumPurchaseFinishDialog()">Pay Now&nbsp;<i class="fa fa-arrow-right"></i></button>
+		       	</div>
+		        
+		      </div>
+		      
+		      
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+			
+		<!--  Premium Pay Option  Dialog End-->
+		
+		
+		<!--  Premium Pay Result  Dialog  Begin-->
+		<div class="modal modal-flat modal-vertical-center fade" id="premiumPayResultDialog" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-width-70">
+		    <div class="modal-content">
+		       
+		      <div class="modal-body modal-body-nopadding">
+		      
+		      	<div class="modal-title">
+		      		<img class="img-responsive" src="img/premium_icon.png" />		   
+		      	</div>
+		      	
+		      	<div class="modal-body-content">
+		      		<div class="sub-header">Membership</div>		      				        	
+					<div class="status-msg-container">
+						Congratulations on<br/>
+						becoming a<br/>
+						<b>Mantrackr</b><br/>
+						Premium Member!
+					</div>
+		      	</div>
+		      
+		       	<div class="form-button-group form-button-group-nomargin">
+		       		<button type="button" class="btn btn-orange btn-block btn-main btn-no-texttransform btn-small-padding btn-nomargintop" data-dismiss="modal">UNLIMITED ACCESS&nbsp;<i class="fa fa-arrow-right"></i></button>
+		       	</div>
+		        
+		      </div>
+		      
+		      
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+			
+		<!--  Premium Pay Result  Dialog End-->
+		
+		
+		
+		<!--  Standout Feature  Dialog  Begin-->
+		<div class="modal modal-flat modal-vertical-center fade" id="standoutFeatureDialog" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-width-70">
+		    <div class="modal-content">
+		      
+		      <div class="modal-body modal-body-nopadding">
+		      
+		      	<div class="modal-title">
+					<span class="small-text">Add my profile to the</span><br/>
+					<span class="emphasis-text">STANDOUT STRIP</span>		      				   
+		      		<div class="back-arrow" data-dismiss="modal">
+		      			<i class="fa fa-arrow-left"></i>
+		      		</div>   		  
+		      	</div>
+		      	
+		      	<div class="modal-body-content">     				        	
+					<ul class="feature-list">
+						<li>Appear above member grids</li>
+						<li>Include a public message</li>
+						<li>Bypass member search filters</li>
+						<li>Increase interest & interaction</li>
+					</ul>	
+					<ul class="standout-purchase-option-list">
+						<li data-ng-click="showStandoutPayOptionDialog()">
+							<div class="price-info"><small>$</small>.99</div>
+							<div class="misc-info">
+								<i class="fa fa-calendar"></i>&nbsp;for 2 days</span>
+							</div>
+							<div class="clearfix"></div>
+						</li>
+						<li data-ng-click="showStandoutPayOptionDialog()">
+							<div class="price-info"><small>$</small>1.99</div>
+							<div class="misc-info">
+								<i class="fa fa-calendar"></i>&nbsp;for 1 week</span>
+							</div>
+							<div class="clearfix"></div>
+						</li>
+						<li data-ng-click="showStandoutPayOptionDialog()">
+							<div class="price-info"><small>$</small>2.99</div>
+							<div class="misc-info">
+								<i class="fa fa-calendar"></i>&nbsp;for 1 month</span>
+							</div>
+							<div class="clearfix"></div>
+						</li>
+					</ul>
+		      	</div>
+		      
+		      </div>
+		      
+		      
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+			
+		<!--  Standout Feature  Dialog End-->
+			
+		
+		<!--  Standout Pay Option Dialog  Begin-->
+		<div class="modal modal-flat modal-vertical-center fade" id="standoutPayOptionDialog" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-width-70">
+		    <div class="modal-content">
+		      
+		      <div class="modal-body modal-body-nopadding">
+		      
+		      	<div class="modal-title">
+		      		<span class="small-text">Add my profile to the</span><br/>
+					<span class="emphasis-text">STANDOUT STRIP</span>		      				
+		      	</div>
+		      	
+		      	<div class="modal-body-content">		      				        	
+					<div class="form-group form-group-bigpadding nomargin-bottom">
+			     					     		     		
+			     		<div class="radio main-radio">
+			     			<label>
+			     				<input type="radio" name="radioPaymentOption"/>
+			     				<span class="radiobox-label">Cell phone bill</span>
+			     			</label>
+			     		</div>
+			     		
+			     		<div class="radio main-radio">
+			     			<label>
+			     				<input type="radio" name="radioPaymentOption"/>
+			     				<span class="radiobox-label">Google Wallet</span>
+			     			</label>
+			     		</div>
+			     		
+			     		<div class="radio main-radio">
+			     			<label>
+			     				<input type="radio" name="radioPaymentOption"/>
+			     				<span class="radiobox-label">Credit Card</span>
+			     			</label>
+			     		</div>
+			     		
+			     		<div class="radio main-radio">
+			     			<label>
+			     				<input type="radio" name="radioPaymentOption" />
+			     				<span class="radiobox-label">Paypal</span>
+			     			</label>
+			     		</div>
+			   		</div>
+		      	</div>
+		      
+		       	<div class="form-button-group form-button-group-nomargin">
+		       		<button type="button" class="btn btn-orange btn-block btn-main btn-no-texttransform btn-small-padding btn-nomargintop" data-ng-click="showStandoutPurchaseFinishDialog()">Pay Now&nbsp;<i class="fa fa-arrow-right"></i></button>
+		       	</div>
+		      
+		      </div>
+		      
+		      
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+			
+		<!--  Standout Pay Option Dialog End-->
+			
+		
+		<!--  Standout Purchase Finish Dialog  Begin-->
+		<div class="modal modal-flat modal-vertical-center fade" id="standoutPurchaseFinishDialog" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-width-70">
+		    <div class="modal-content">
+		      
+		      <div class="modal-body modal-body-nopadding">
+		      
+		      	<div class="modal-title">
+		      		<span class="small-text">Add my profile to the</span><br/>
+					<span class="emphasis-text">STANDOUT STRIP</span>		      				
+		      	</div>
+		      	
+		      	<div class="modal-body-content">		      
+		      		
+		      		<div class="sub-header"><i class="fa fa-check"></i>&nbsp;Payment Successful</div>	
+		      		
+		      		<div class="standout-msg-edit-container">
+		      			<label class="large-label">Add a public message:</label>
+		      			<label class="small-label">You may edit your note at any time</label>
+		      			<div class="form-group form-group-nomargin">
+				        	<div class="form-group-righttop-info">175</div>
+				        	<textarea class="form-control form-control-innerctrl" rows="5"></textarea>
+				      	</div>
+		      		</div>				        	
+					
+		      	</div>
+		      
+		       	<div class="form-button-group form-button-group-nomargin">
+		       		<button type="button" class="btn btn-flat-white btn-orange-text btn-block btn-main btn-no-texttransform btn-small-padding btn-nomargintop">Add to Standout Strip</button>
+		       	</div>
+		      
+		      </div>
+		      
+		      
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+			
+		<!--  Standout Purchase Finish Dialog End-->
+		
+		
+		<!--  Standout Status Dialog Begin-->
+		<div class="modal modal-flat modal-vertical-center fade" id="standoutStatusDialog" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-width-70">
+		    <div class="modal-content">
+		      
+		      <div class="modal-body modal-body-nopadding">
+		      
+		      	<div class="modal-title">
+					<span class="emphasis-text">STANDOUT STRIP</span>		      				
+		      	</div>
+		      	
+		      	<div class="modal-body-content">		      				        	
+					
+					<div class="standout-status-container">
+						<label class="status-grey-label"><i class="fa fa-calendar"></i>&nbsp;Added:</label>
+						<label class="status-orange-label">Dec 12, 2014</label><br/>
+						<label class="status-grey-label"><i class="fa fa-calendar"></i>&nbsp;Expires:</label>
+						<label class="status-orange-label">Dec 19, 2014</label>
+					</div>
+					
+		      	</div>
+		      
+		       	<div class="form-button-group form-button-group-nomargin">
+		       		<button type="button" class="btn btn-flat-grey btn-block btn-main btn-bold btn-no-texttransform btn-main-smallfont btn-nomargintop">Extend Duration</button>
+		       		<button type="button" class="btn btn-flat-dark-grey btn-block btn-main btn-bold btn-no-texttransform btn-main-smallfont btn-nomargintop" data-ng-click="showStandoutEditMessageDialog()">Edit Public Message</button>
+		       		<button type="button" class="btn btn-orange btn-block btn-main btn-bold btn-no-texttransform btn-main-smallfont btn-nomargintop btn-big-paddint-top-bottom" data-dismiss="modal">Close</button>
+		       	</div>
+		      
+		      </div>
+		      
+		      
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+			
+		<!--  Standout Status Dialog End-->
+
+
+		<!--  Standout Edit Message Dialog Begin-->
+		<div class="modal modal-flat modal-vertical-center fade" id="standoutEditMessageDialog" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-width-70">
+		    <div class="modal-content">
+		      
+		      <div class="modal-body modal-body-nopadding">
+		      
+		      	<div class="modal-title">
+					<span class="emphasis-text">STANDOUT STRIP</span>		      				
+		      	</div>
+		      	
+		      	<div class="modal-body-content">		      				        	
+					
+					<div class="standout-msg-edit-container">
+		      			<label class="large-label">My public message</label>
+		      			<div class="form-group form-group-nomargin">
+				        	<div class="form-group-righttop-info">175</div>
+				        	<textarea class="form-control form-control-innerctrl" rows="5"></textarea>
+				      	</div>
+		      		</div>		
+					
+		      	</div>
+		      
+		       	<div class="form-button-group form-button-group-nomargin">
+		       		<button type="button" class="btn btn-flat-grey btn-block btn-main btn-bold btn-no-texttransform btn-main-smallfont btn-nomargintop">Save Message</button>
+		       		<button type="button" class="btn btn-orange btn-block btn-main btn-bold btn-no-texttransform btn-main-smallfont btn-nomargintop btn-big-paddint-top-bottom" data-dismiss="modal">Close</button>
+		       	</div>
+		      
+		      </div>
+		      
+		      
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+			
+		<!--  Standout Edit Message Dialog End-->
+		
+		
+		<!--  Search Result Panel Start -->
+		<div data-role="panel" id="searchResultPanel" class="ui-panel-closed">
+			
+			<div class="panel-header">4 Results</div>
+			
+			<div id="searchResultContainer" class="swiper-container swiper-vertical-container">
+				
+				<div class="swiper-wrapper">
+					<div class="swiper-slide">
+						
+						<div class="searchResultContent" data-ng-class="memberSearchMode == 'Simple' && 'simpleSearchContent' || 'advancedSearchContent'">
+							
+							<div class="searchMemberContainer">
+								<div class="memberProfilePhoto">
+									<img src="img/test/02.png" class="img-responsive grid-cell-image" />
+								</div>	
+								<div class="memberProfileName">HotGuy</div>
+								<div class="memberProfileDistance"><i class="fa fa-map-marker"></i>&nbsp;22 m away</div>
+								<div class="memberSearchDescription" data-ng-if="memberSearchMode != 'Simple'"><strong>"skate"</strong> found in HEADLINE</div>
+								<div class=clearfix"></div>
+							</div>
+							
+							<div class="searchMemberContainer">
+								<div class="memberProfilePhoto">
+									<img src="img/test/02.png" class="img-responsive grid-cell-image" />
+								</div>	
+								<div class="memberProfileName">HotGuy</div>
+								<div class="memberProfileDistance"><i class="fa fa-map-marker"></i>&nbsp;22 m away</div>
+								<div class="memberSearchDescription" data-ng-if="memberSearchMode != 'Simple'"><strong>"skate"</strong> found in HEADLINE</div>
+								<div class=clearfix"></div>
+							</div>
+							
+							<div class="searchMemberContainer">
+								<div class="memberProfilePhoto">
+									<img src="img/test/02.png" class="img-responsive grid-cell-image" />
+								</div>	
+								<div class="memberProfileName">HotGuy</div>
+								<div class="memberProfileDistance"><i class="fa fa-map-marker"></i>&nbsp;22 m away</div>
+								<div class="memberSearchDescription" data-ng-if="memberSearchMode != 'Simple'"><strong>"skate"</strong> found in HEADLINE</div>
+								<div class=clearfix"></div>
+							</div>
+							
+							<div class="searchMemberContainer">
+								<div class="memberProfilePhoto">
+									<img src="img/test/02.png" class="img-responsive grid-cell-image" />
+								</div>	
+								<div class="memberProfileName">HotGuy</div>
+								<div class="memberProfileDistance"><i class="fa fa-map-marker"></i>&nbsp;22 m away</div>
+								<div class="memberSearchDescription" data-ng-if="memberSearchMode != 'Simple'"><strong>"skate"</strong> found in HEADLINE</div>
+								<div class=clearfix"></div>
+							</div>
+							
+							<div class="searchMemberContainer">
+								<div class="memberProfilePhoto">
+									<img src="img/test/02.png" class="img-responsive grid-cell-image" />
+								</div>	
+								<div class="memberProfileName">HotGuy</div>
+								<div class="memberProfileDistance"><i class="fa fa-map-marker"></i>&nbsp;22 m away</div>
+								<div class="memberSearchDescription" data-ng-if="memberSearchMode != 'Simple'"><strong>"skate"</strong> found in HEADLINE</div>
+								<div class=clearfix"></div>
+							</div>
+				
+							<div class="clearfix"></div>
+						</div>
+				  		
+	  				
+	  				</div>
+	  			</div>
+	  		
+	  		</div>
+	  		
+	  		<div class="activity-button-container">
+	  			<button type="button" class="btn btn-block btn-orange btn-main btn-bold btn-nomargintop btn-no-texttransform" data-ng-click="closeSearchResultPanel()">Close</button>
+	  		</div>
+	  		
+		</div>
+		
+		<!--  Search Result Panel End -->
+		
+	</div>
+	
+	<!-- Error Warning Info Dialogs : Begin -->
+	
+	
+	<div id="alert-wrapper">
+	
+		<div class="modal modal-flat modal-vertical-center fade" id="alertDialog" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-width-70">
+		    <div class="modal-content">
+		      <!-- Name Change -->
+		      <div class="modal-body modal-body-nopadding">
+		      	
+		      	<div class="alertmessage-container">
+		      		<span class="alert-type-icon"><i class="fa fa-info-circle"></i></span>
+		      		<p class="alertheading">
+		      			Success
+		      		</p>
+		      		<p class="alertmessage">
+		      			This is alert Dialog
+		      		</p>
+		      	</div>
+		      			      			      			      
+		       	<div class="form-button-group form-button-group-nomargin">
+		       		<button type="button" class="btn btn-orange btn-block btn-main btn-bold btn-small-padding btn-main-smallfont" data-dismiss="modal">Ok</button>
+		       	</div>
+		        
+		      </div>
+		      <!-- Name Change End -->
+		      
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+	</div>
+	
+	
+	<div id="loading-wrapper">
+		<div class="modal modal-flat modal-vertical-center fade" id="loadingDialog" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-width-50">
+		    <div class="modal-content">
+		      <!-- Name Change -->
+		      <div class="modal-body modal-body-centeralign">
+		      	
+		      	<div class="loading-info-container">
+		      		<img src="img/loading.gif" class="img-responsive" alt="Mantrackr Loading Bar" />
+		      	</div>
+		      	
+		      	<p class="loading-info-message">
+		      		Please wait...
+		      	</p>
+		        
+		      </div>
+		      <!-- Name Change End -->
+		      
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
+	</div>	
+	
+	
+		
+	<div id="photo-crop-window">
+	
+		<div class="photo-crop-window-header">
+			<h4 class="lbl-block text-center txt-grey">Crop to create your grid thumbnail pic:</h4>
+			<div class="crop-approve-button-group">
+				<span class="noButton"><i class="fa fa-times-circle"></i></span>
+				<span class="yesButton" id="cropPhotoYes"><i class="fa fa-check-circle"></i></span>
+			</div>
+		</div>
+		
+		<div class="photo-crop-window-content">
+			<div id="cropper"></div>
+		</div>
+			
+			
+		 <!-- <div class="photo-crop-window-footer">
+			<p class="modal-footer-icon">
+		  		<i class="fa fa-exclamation-circle"></i>
+		  	</p>
+		  	<p class="modal-footer-description">
+		  		Your Primary Photo must remain G-Rated to comply with Apple's app photo guidelines, regardless of your device type.
+		  	</p>
+		</div> -->
+		
+		
+	</div>
+
+	
+	<!-- Error Warning Info Dialogs : End -->
+	
+	
+		
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.js"></script>
+    <script src="js/imgPicker-custom.js"></script>
+    <script src="js/idangerous.swiper.js"></script>
+    <script src="js/jquery.mobile.custom.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.js"></script>
+	<script src="js/bootstrap-fileupload.js"></script>
+	<!--  Angular JS Script files -->
+	<script src="js/angular-file-upload-shim.js"></script>
+	<script src="js/angular.js"></script>
+	<script src="js/angular-animate.js"></script>
+	<script src="js/angular-route.js"></script>
+	<script src="js/angular-file-upload.js"></script>
+	<!--  Firebase JS Script files --> 
+	<script src="js/firebase.js"></script>
+	<script src="js/angularfire.min.js"></script>
+		
+	<!--  Hammer Js -->
+	<script src="js/jquery.hammer.js"></script>
+	<script src="js/hammer.js"></script>
+	
+	<!--  JSlider  -->
+	<script src="js/jslider/jshashtable-2.1_src.js"></script>
+	<script src="js/jslider/jquery.numberformatter-1.2.3.js"></script>
+	<script src="js/jslider/tmpl.js"></script>
+	<script src="js/jslider/jquery.dependClass-0.1.js"></script>
+	<script src="js/jslider/draggable-0.1.js"></script>
+	<script src="js/jslider/jquery.slider.js"></script>
+	
+	<!-- Slip.js -->
+	<script src="js/slip.js"></script>
+	
+	<!--  Google Map API -->
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+	
+	<!--  Utils Js -->
+	<script src="js/utils.js"></script>
+	
+	<!--  JCrop Js -->
+	<script src="js/jquery.Jcrop.js"></script>
+	
+    <!--  Main JS file -->
+    <script src="js/app.js"></script>
+    <script src="js/controllers/root.js"></script>
+	<script src="js/controllers/register.js"></script>
+	<script src="js/controllers/chat.js"></script>
+	<script src="js/controllers/forgotpassword.js"></script>
+	<script src="js/controllers/index.js"></script>
+	<script src="js/controllers/login.js"></script>
+	<script src="js/controllers/membergrid.js"></script>
+	<script src="js/controllers/profilesync.js"></script>
+	<script src="js/controllers/profileupdate.js"></script>
+	<script src="js/controllers/profile.js"></script>
+	<script src="js/controllers/memberprofile.js"></script>
+	<script src="js/controllers/mainfooter.js"></script>
+	<script src="js/controllers/hotornot.js"></script>
+	<script src="js/controllers/settings.js"></script>
+	<script src="js/filters/filterchat.js"></script>
+	<script src="js/filters/memberfilter.js"></script>
+	<script src="js/directives/memberPhotoGrid.js"></script>
+	<script src="js/directives/finishRender.js"></script>
+    
+  </body>
+</html>

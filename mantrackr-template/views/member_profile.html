@@ -1,0 +1,224 @@
+<div id="header-menu" class="profile-header-menu">
+	<div class="header-back-menuitem-container">
+		<a class="header-menu-item header-menu-back-item" data-ng-click="gotoBack()">
+			<span class="iconmoon-back-to-grid"></span>
+		</a>
+	</div>
+	
+	<div class="profilename-header-container">
+		<a class="profilename-header"><i class="member-online" data-ng-show="currentMemberInfo.online == true"></i>&nbsp;{{currentMemberInfo.name}}</a>
+	</div>
+	
+	<div class="profile-header-favoritecontainer">
+		<i class="fa fa-star"></i>
+	</div>
+	
+	<div class="clearfix"></div>
+</div>
+
+<div class="page-content-with-profileheader-footer">
+	
+	<ul id="profileNavTabs" class="nav nav-tabs nav-base-tabs">
+		<li class="onethird-tab-item" data-ng-class="currentTab == 0 && 'active'"><a data-ng-click="currentTab = 0">Photos</a></li>
+		<li class="onethird-tab-item" data-ng-class="currentTab == 1 && 'active'"><a data-ng-click="currentTab = 1">About me</a></li>
+		<li class="onethird-tab-item no-right-border" data-ng-class="currentTab == 2 && 'active'"><a data-ng-click="currentTab = 2">Messages</a></li>
+	</ul>
+	
+	<div class="tab-content tab-base-content">
+		<div class="tab-pane fade" data-ng-class="currentTab == 0 && 'active in'" data-ng-include="'views/common/profile_photo.html'">
+			
+		</div>
+		<div class="tab-pane fade" data-ng-class="currentTab == 1 && 'active in'" data-ng-include="'views/common/profile_about.html'" id="memberProfileAboutPane">
+		
+		</div>
+		<div class="tab-pane fade" data-ng-class="currentTab == 2 && 'active in'" data-ng-include="'views/common/profile_messages.html'">
+		
+		</div>
+	</div>
+	
+</div>
+
+
+
+
+<div class="page-footer-absolute background-orange-opacity-8 page-footer-orange">
+
+	<div id="profile-footer-menu" class="row swiper-container swiper-horizontal-container">
+		<div class="swiper-wrapper">
+			<div class="swiper-slide">
+						
+				<div class="col-profile-footermenu footer-menu-item-container">
+					<a class="footer-menu-item"><i class="fa fa-unlock"></i>&nbsp;</a>
+					<div class="footer-menu-item-label">Unlock</div>
+				</div>
+				<div class="col-profile-footermenu footer-menu-item-container">
+					<a class="footer-menu-item"><span class="iconmoon-woof2"></span>&nbsp;</a>
+					<div class="footer-menu-item-label">Woof</div>
+				</div>
+				<div class="col-profile-footermenu footer-menu-item-container">	
+					<a class="footer-menu-item"><i class="fa fa-gift"></i>&nbsp;</a>
+					<div class="footer-menu-item-label">Send Gift</div>
+				</div>
+				<div class="col-profile-footermenu footer-menu-item-container" data-toggle="modal" data-target="#noTrackSettingsModal">
+					<a class="footer-menu-item"><i class="fa fa-eye-slash"></i>&nbsp;</a>
+					<div class="footer-menu-item-label">No Track</div>
+				</div>
+				<div class="col-profile-footermenu footer-menu-item-container" data-ng-click="showOnlineMembersPanel()">
+					<a class="footer-menu-item"><i class="fa fa-users"></i>&nbsp;</a>
+					<div class="footer-menu-item-label">+ Third</div>
+				</div>
+				<div class="col-profile-footermenu footer-menu-item-container">
+					<a class="footer-menu-item"><i class="fa fa-map-marker"></i>&nbsp;</a>
+					<div class="footer-menu-item-label">Send Map</div>
+				</div>
+				<div class="col-profile-footermenu footer-menu-item-container">
+					<a class="footer-menu-item"><i class="fa fa-ban"></i>&nbsp;</a>
+					<div class="footer-menu-item-label">Block</div>
+				</div>
+				<div class="col-profile-footermenu footer-menu-item-container">
+					<a class="footer-menu-item"><i class="fa fa-flag"></i>&nbsp;</a>
+					<div class="footer-menu-item-label">Flag</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	
+	<span class="footermenu-more-link" id="footermenu-more-link"><i class="fa fa-angle-right"></i></span>
+	
+</div>	
+
+
+
+
+
+
+
+<!--  Search  Dialog  Begin-->
+<div class="modal modal-flat modal-vertical-center fade" id="noTrackSettingsModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-width-70">
+    <div class="modal-content">
+      
+      <div class="modal-body modal-body-nopadding">
+      
+      	<div class="form-button-group form-button-group-nomargin">
+       		<button type="button" class="btn btn-flat-grey btn-grey-text btn-block btn-main btn-no-texttransform btn-small-padding btn-nomargintop btn-main-smallfont" data-dismiss="modal">Don't leave my track for this visit</button>
+       		<button type="button" class="btn btn-orange btn-block btn-main btn-no-texttransform btn-small-padding btn-nomargintop" data-dismiss="modal">Cancel</button>
+       	</div>
+        
+      </div>
+      
+      
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	
+<!--  Search Dialog End-->
+
+
+
+
+<!--  Members Grid  Popup Start -->
+
+<div data-role="panel" id="onlineMembersPanel" class="ui-panel-closed">
+	
+	<div class="ui-panel-inner" id="onlineMembersList" data-ng-show="onlineMembersGridView == true">
+	
+		<div class="panelHeader">
+			<p>Suggest a 3rd member to add<br/>to your chat with <strong>HairyGirl85</strong>:</p>
+		</div>
+		
+		<div class="panelBody swiper-container" id="onlinemember-photo-grid">
+			
+			<div class="swiper-wrapper">
+				<div class="swiper-slide member-grid-cell" data-ng-repeat="member in filtered = (members | onlineFilter:memberInfo.id:currentMemberInfo.id | orderByDistance:memberInfo.lat:memberInfo.lng)" on-finish-render="onlineMemberGridRenderDone">
+					<img data-ng-src="{{photoupload_baseuri + member.photos[member.primary_photo_id].thumb_path}}" class="img-responsive grid-cell-image" data-ng-if="member.primary_photo_approved == 1" data-ng-click="showOnlineMemberProfilePage(member.id)"/>
+					<img data-ng-src="{{assets_imagebaseuri + 'avatars/pendingPhoto.png'}}" class="img-responsive grid-cell-image" data-ng-if="member.primary_photo_approved != 1" data-ng-click="showOnlineMemberProfilePage(member.id)"/>
+					<div class="member-name"><span class="member-looking-now-icon iconmoon-binoculars" data-ng-if="member.lookingnow == 1"></span><i class="member-online" data-ng-if="member.online == true"></i>&nbsp;{{member.name}}</div>
+					<div class="message-num" data-ng-if="memberInfo.myMessageBox[member.id].info.unread > 0"><span class="iconmoon-chat-number"></span><div class="msgnum-text">{{memberInfo.myMessageBox[member.id].info.unread}}</div></div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			
+		</div>
+		
+		<div class="panelFooter">
+			<button type="button" class="btn btn-flat-grey btn-grey-text btn-block btn-main btn-bold btn-small-padding btn-main-smallerfont btn-big-paddint-top-bottom2" data-ng-click="hideOnlineMembersPanel()">Cancel</button>
+			<div class="notice-footer">
+				<button type="button" class="btn btn-block btn-footer-notice btn-full-height btn-main-smallestfont">Go Premium to view UNLIMITED GUYS&nbsp;&nbsp;<i class="fa fa-arrow-right"></i></button>
+			</div>												
+		</div>
+	
+ 	</div>
+ 	
+ 	
+ 	<div class="ui-panel-inner" id="onlineMemberProfileView" data-ng-hide="onlineMembersGridView == true">
+ 		
+ 		<div class="panelHeader">
+			<p>3-way chat w/ <strong>HairyGirl85</strong>?</p>
+		</div>
+ 		
+ 		<div class="panelBody">
+ 		
+ 			<div id="onlineMemberPhotoContainer">
+ 			
+ 				<div class="swiper-wrapper">
+					<div class="swiper-slide profilePhotoItemContainer" on-finish-render="onlineMemberProfilePhotosRenderFinish" data-ng-repeat="photo in selectedOnlineMemberInfo.photos" data-ng-class="photo.is_public != 1 && 'profilePrivatePhotoContainer'">
+						<img data-ng-src="{{photo.is_public != 1 && 'img/locked_image.png' || photoupload_baseuri + photo.path}}" class="img-responsive profilePhotoImg" />
+					</div>
+				</div>
+									
+ 			</div>
+ 			
+ 			<div class="profilePhotoPaginationContainer" style="top: 20px;">
+				<div class="profilePhotoPagination" id="onlineMemberPhotosPagination"></div>
+			</div>
+
+ 			<div id="onlineMemberInfoContainer" class="swiper-container swiper-vertical-container">
+ 				
+ 				<div class="swiper-wrapper">
+					<div class="swiper-slide">
+					
+						<dl class="profileinfo_block" class="profile-non-editable">
+							<dt>My Stats</dt>
+							<dd>
+								<span class="inline_text_container">{{ageText_selectedMember}}</span>
+								<span class="inline_text_container">{{heightText_selectedMember}}</span>
+								<span class="inline_text_container">{{weightText_selectedMember}}</span>
+								<span class="inline_text_container">{{ethnicityText_selectedMember}}</span>
+							</dd>
+							<dt>{{relationshipText}}open to</dt>
+							<dd>{{openToListText_selectedMember}}</dd>
+							<dt>Looking for</dt>
+							<dd>{{lookingforText_selectedMember}}</dd>
+							<dt>About me</dt>
+							<dd>{{descriptionText_selectedMember}}</dd>
+							<dt>My interests</dt>
+							<dd>{{interestsText_selectedMember}}</dd>
+						</dl>
+							
+					</div>
+				</div>
+ 				
+				
+ 			</div>
+ 			
+ 		
+ 		</div>
+ 		
+ 		<div class="panelFooter" data-ng-if="showMemberProfileInitiateMode">
+ 			<button type="button" class="btn btn-white btn-grey-bordered btn-main shadow-outset btn-main-smallfont btn-big-paddint-top-bottom" data-ng-click="backToOnlineMembersList()">&lt;</button>
+ 			<button type="button" class="btn btn-white btn-grey-bordered btn-main shadow-outset btn-main-smallfont btn-big-paddint-top-bottom" data-ng-click="sendThirdPartyRequestMessage()"><i class="fa fa-thumbs-o-up"></i>&nbsp;Suggest as 3rd</button>
+ 		</div>
+ 	
+ 		<div class="panelFooter" data-ng-if="!showMemberProfileInitiateMode">
+ 			<button type="button" class="btn btn-white btn-grey-bordered btn-main shadow-outset btn-main-smallfont btn-big-paddint-top-bottom" data-ng-click="denyThirdMemberRequestOnDialog()"><i class="fa fa-times"></i>&nbsp;No Thanks</button>
+ 			<button type="button" class="btn btn-white btn-grey-bordered btn-main shadow-outset btn-main-smallfont btn-big-paddint-top-bottom" data-ng-click="approveThirdMemberRequestOnDialog()"><i class="fa fa-thumbs-o-up"></i>&nbsp;Sure!</button>
+ 		</div>
+ 		
+ 	</div>
+ 	
+ 	
+</div>
+
+<!-- Members Grid  Popup End -->

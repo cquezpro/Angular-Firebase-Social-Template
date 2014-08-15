@@ -1,0 +1,47 @@
+<div class="swiper-container" id="profilePhotoContainer">
+
+	<div class="swiper-wrapper" data-ng-if="bProfileOwner">
+		<div class="swiper-slide profilePhotoItemContainer" on-finish-render="profilePhotosRenderFinish" data-ng-repeat="photo in filterPublicPhotos()">
+			<img data-ng-src="{{photoupload_baseuri + photo.path}}" class="img-responsive profilePhotoImg" data-photo-index="{{$index}}" data-photo-type="Public" data-photo-id="{{photo.id}}"/>
+		</div>
+		<div class="swiper-slide profilePhotoItemContainer profilePrivatePhotoContainer" on-finish-render="profilePhotosRenderFinish" data-ng-repeat="photo in filterPrivatePhotos()">
+			<img data-ng-src="{{photoupload_baseuri + photo.path}}" class="img-responsive profilePhotoImg" data-photo-index="{{$index}}" data-photo-type="Private" data-photo-id="{{photo.id}}"/>
+		</div>
+	</div>
+	
+	<div class="swiper-wrapper" data-ng-if="!bProfileOwner && memberPhotosCount > 0">
+		<div class="swiper-slide profilePhotoItemContainer" on-finish-render="profilePhotosRenderFinish" data-ng-repeat="photo in currentMemberInfo.photos" data-ng-class="photo.is_public != 1 && 'profilePrivatePhotoContainer'">
+			<img data-ng-src="{{photo.is_public != 1 && 'img/locked_image.png' || photoupload_baseuri + photo.path}}" class="img-responsive profilePhotoImg" />
+		</div>
+	</div>
+	
+	<div class="swiper-wrapper" data-ng-if="!bProfileOwner && memberPhotosCount == 0">
+		<div class="swiper-slide profilePhotoNoItemContainer">
+			<img data-ng-src="{{assets_imagebaseuri + 'avatars/noimage.jpg'}}" class="img-responsive profilePhotoImg" />
+		</div>
+	</div>
+	
+</div>
+
+<div class="profilePhotoPaginationContainer">
+	<div class="profilePhotoPagination"></div>
+</div>
+<a class="profilePhotoPrevArrow" data-ng-click="swipePrevProfilePhoto()" data-ng-hide="memberPhotosCount == 0"><i class="fa fa-angle-left"></i></a>
+
+<a class="profilePhotoNextArrow" data-ng-click="swipeNextProfilePhoto()" data-ng-hide="memberPhotosCount == 0"><i class="fa fa-angle-right"></i></a>
+
+<div class="center-absolute-container profile-photo-button-group-container" data-ng-show="bProfileOwner">
+	<div class="flat-button-group" id="profile-photo-button-group">
+		<div class="flat-button" data-ng-click="showCurrentPhotoEditDialog()">
+			<div class="primaryPhotoThumbContainer box ratio4_5">
+				<div class="content">
+					<img data-ng-src="{{currentViewPhoto}}" class="img-full"/>
+				</div>
+			</div>&nbsp;
+			<i class="fa fa-pencil pencil-icon pencil-margin-top"></i>
+		</div>
+		<div class="flat-button">
+			<div class="photoAddIconContainer" data-ng-click="showProfilePhotosDialog()"><i class="fa fa-plus"></i>&nbsp;&nbsp;<i class="fa fa-camera"></i></div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,156 @@
+.portlet .portlet-header h1, .portlet .portlet-header h2, .portlet .portlet-header h3, .portlet .portlet-header h4, .portlet .portlet-header h5, .portlet .portlet-header h6
+{
+	color: #e5412d;
+}
+
+.text-black{
+	color: #000;
+}
+
+.smaller{
+	font-size: 50%;
+}
+
+
+.summary-list-item{
+	margin-bottom: 30px;
+}
+
+.summary-list-item-heading{
+	margin-bottom: 3px;
+	font-weight: bold;
+}
+
+.summary-list-item-content{
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.white-well{
+	background-color: white;
+}
+
+.icon-red{
+	color: #f06000;
+}
+
+.margin-bottom-20px{
+	margin-bottom: 20px;
+}
+.margin-top-10px{
+	margin-top: 10px;
+}
+
+.member-public-photo-container{
+	width: 50%;
+	float: left;
+	
+}
+
+.member-private-photo-container{
+	width: 50%;
+	float: left;
+}
+
+.inline_text_container{
+	display: inline-block;
+	font-size: 18px;
+	border-right: 1px solid #f06000;
+	padding: 7px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.inline_text_container.last_child{
+	border-right: none;
+}
+
+
+dl.info_block_list dt{
+	text-transform: uppercase;
+	font-size: 16px;
+	color: #f06000;
+	margin-bottom: 10px;
+	font-weight: normal;
+}
+
+dl.info_block_list dd{
+	font-size: 14px;
+	margin-bottom: 30px;
+}
+
+.top_rows_navigator_container{	
+	position: absolute;
+	right: 40px;
+	top: 35px;
+	display: inline-block;
+	color: #f06000;
+	font-size: 30px;
+}
+
+.top_rows_navigator_container a{
+	text-decoration: none;
+	color: #f06000;
+}
+
+.top_rows_navigator_container a:hover,
+.top_rows_navigator_container a:visited,
+.top_rows_navigator_container a:active{
+	text-decoration: none;
+	color: #f06000;
+}
+
+
+
+.dashboard-stat.primary.no-hover:hover{
+	background-color: #e5412d;
+}
+
+.dashboard-stat.secondary.no-hover:hover{
+	background-color: #f0ad4e;
+}
+
+.dashboard-stat.tertiary.no-hover:hover{
+	background-color: #888888;
+}
+
+.dashboard-stat.no-hover:hover{
+	background-color: #eee;
+}
+
+.list-group-item.no-hover:hover{
+	background-color: #fff;
+}
+
+.section-header{
+	margin-bottom: 30px;
+}
+
+.margin-right-20px{
+	margin-right: 20px !important;
+}
+
+.form-inline .form-group.inline-form-vertical-top{
+	vertical-align: top;
+}
+
+.portlet-collapse-toggle-link{
+	font-size: 30px;
+	color: #747474;
+	margin-top: 5px;
+}
+
+.thumbnail-footer a.pendingphoto-member-link{
+	color: #000;
+	font-size: 16px;
+	text-decoration: underline;
+}
+
+.clearfix{
+	clear: both;
+}
+
+.txt-orange{
+	color: #f06000;
+}

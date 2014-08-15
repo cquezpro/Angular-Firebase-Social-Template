@@ -1,0 +1,162 @@
+<div class="swiper-container swiper-vertical-container" id="profileMessageContainer">
+	<div class="swiper-wrapper">
+		<div class="swiper-slide">
+			<div class="message-list-container">
+				
+ 				<div class="message-list-item" data-ng-repeat="message in myBoxMessages" data-ng-class="message.orient == 'O' && 'message-pull-right' || 'message-pull-left'">
+					
+					<div data-ng-if="message.type == 'T'">
+						<div class="msg-profile-thumb" data-ng-if="message.orient == 'O'">
+							<img data-ng-src="{{getMemberPhotoThumbUrl(false)}}" class="img-responsive" />							
+						</div>
+						
+						<div class="msg-profile-thumb" data-ng-if="message.orient != 'O'">
+							<img data-ng-src="{{getAppMemberPhotoThumbUrl(message.senderId, false)}}" class="img-responsive" />
+						</div>					
+						
+						<div class="msg-content-container">
+							<div class="msg-content">
+								{{message.body}}
+							</div>
+							<div class="msg-time">
+								<i class="fa fa-clock-o"></i>&nbsp;2 mins ago
+							</div>
+						</div>
+						<div class="clearfix"></div>
+
+					</div>
+					
+					<div data-ng-if="message.type == 'A3'">
+						<div class="msg-profile-thumb" data-ng-if="message.orient == 'O'">
+							<img data-ng-src="{{getMemberPhotoThumbUrl(false)}}" class="img-responsive" />
+						</div>
+						
+						<div class="msg-profile-thumb" data-ng-if="message.orient != 'O'">
+							<img data-ng-src="{{getAppMemberPhotoThumbUrl(message.senderId, false)}}" class="img-responsive" />
+						</div>
+						
+						
+						<div class="msg-content-container">
+						
+							<div class="msg-content" data-ng-if="message.orient != 'O'">
+								3-way chat w/&nbsp;<span class="memberProfileName" data-ng-click="showThirdMemberProfilePanel(message)">{{members[message.thirdMemberId].name | filterMemberName}}</span>?
+							</div>
+							
+							<div class="msg-content" data-ng-if="message.orient == 'O'">
+								3-way chat w/&nbsp;<span class="memberProfileName">{{members[message.thirdMemberId].name | filterMemberName}}</span>?
+							</div>
+							
+							<div class="msg-thirdmember-request" data-ng-if="message.orient != 'O'">
+								
+								<div class="thirdparty-member-photo-container">
+									<img data-ng-src="{{getAppMemberPhotoThumbUrl(message.thirdMemberId, false)}}" class="img-responsive " data-ng-click="showThirdMemberProfilePanel(message.thirdMemberId)"/>
+								</div>
+								
+								<button type="button" class="btn btn-white btn-grey-bordered btn-main shadow-thin-outset btn-main-smallfont" data-ng-click="denyThirdMemberRequest(message)"><i class="fa fa-times"></i></button>
+	 							<button type="button" class="btn btn-white btn-grey-bordered btn-main shadow-thin-outset btn-main-smallfont" data-ng-click="approveThirdMemberRequest(message)" style="margin-left: -4px;"><i class="fa fa-thumbs-o-up"></i></button>
+								
+							</div>
+							
+							<div class="msg-time">
+								<i class="fa fa-clock-o"></i>&nbsp;2 mins ago
+							</div>
+						</div>
+						<div class="clearfix"></div>
+
+					</div>
+					
+					<div data-ng-if="message.type == 'A3INV' && message.orient == 'I'">
+					
+						<div class="msg-profile-thumb">
+							<img data-ng-src="{{getAppMemberPhotoThumbUrl(message.senderId, false)}}" class="img-responsive" />							
+						</div>
+						<div class="msg-content-container">
+						
+							<div class="msg-content">
+								3-way chat w/&nbsp;<span class="memberProfileName">{{members[message.thirdPartyId].name | filterMemberName}}</span>?
+							</div>
+							
+							<div class="msg-thirdmember-request">
+								
+								<div class="thirdparty-member-photo-container">
+									<img data-ng-src="{{getAppMemberPhotoThumbUrl(message.thirdPartyId, false)}}" class="img-responsive"/>
+								</div>
+								
+								<button type="button" class="btn btn-white btn-grey-bordered btn-main shadow-thin-outset btn-main-smallfont" data-ng-click="denyGroupChatAttend(message)"><i class="fa fa-times"></i></button>
+	 							<button type="button" class="btn btn-white btn-grey-bordered btn-main shadow-thin-outset btn-main-smallfont" data-ng-click="approveGroupChatAttend(message)" style="margin-left: -4px;"><i class="fa fa-thumbs-o-up"></i></button>
+								
+							</div>
+							
+							<div class="msg-time">
+								<i class="fa fa-clock-o"></i>&nbsp;2 mins ago
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					
+					</div>
+					
+					<div data-ng-if="message.type == 'A3IR' && message.orient == 'I'">
+						<div class="msg-content-container">
+							<div class="msg-content msg-info-content" data-ng-if="message.approved == true">
+								{{members[message.senderId].name | filterMemberName}} has approved invitation.
+							</div>
+							<div class="msg-content msg-info-content" data-ng-if="message.approved == false">
+								{{members[message.senderId].name | filterMemberName}} has denied invitation.
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					
+					
+					<div data-ng-if="message.type == 'A3IT'">
+						<div class="msg-content-container">
+							<div class="msg-content msg-info-content">
+								{{members[message.thirdPartyId].name | filterMemberName}} has been asked to join.
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					
+					
+					<div data-ng-if="message.type == 'A3INVREPLY' && message.orient == 'I'">
+						<div class="msg-content-container">
+							<div class="msg-content msg-info-content" data-ng-if="message.approved == true">
+								{{members[message.senderId].name | filterMemberName}} has joined your chat.
+							</div>
+							<div class="msg-content msg-info-content" data-ng-if="message.approved == false">
+								{{members[message.senderId].name | filterMemberName}} has denied your invitation.
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					
+				</div>
+				
+				<div style="height: 50px;">&nbsp;</div>
+				
+				<div class="clearfix"></div>
+			</div>	
+		</div>
+	</div>
+</div>
+
+
+<div id="message-send-input-container" class="background-orange-opacity-8">
+	<div class="message-input-container">
+		<div class="message-input-wrapper commentpin-rightmiddle-white">
+			<div class="form-group form-group-base-messageinput form-control-displayascell">
+				<input type="text" class="form-control form-control-messagebase" placeholder="WRITE A MESSAGE" id="profileMessageText"  />
+			</div>
+			<div class="sendmessage-btn" data-ng-click="sendTextChatMessage()"><i class="fa fa-envelope"></i></div>
+		</div>
+		<div class="message-profilepic-container">
+			<div style="width: 30px; height: 30px">
+				<img src="img/test/02.png" class="img-responsive" />
+			</div>
+		</div>
+   </div>
+</div>
+
+<div class="primary-photo-opaque">
+	<img data-ng-src="{{currentViewPhoto}}" class="img-responsive" />
+</div>

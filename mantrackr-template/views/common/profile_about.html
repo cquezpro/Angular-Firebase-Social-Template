@@ -1,0 +1,29 @@
+<div class="swiper-container swiper-vertical-container" id="profileInfoContainerSwiper">
+	<div class="swiper-wrapper">
+		<div class="swiper-slide">
+		
+			<dl class="profileinfo_block" data-ng-class="bProfileOwner && 'profile-editable' || 'profile-non-editable'">
+				<dt>My Stats<span class="edit-button-container"><button type="button" class="btn btn-block btn-main btn-edit" data-toggle="modal" data-target="#profileStatsChangeModal"><i class="fa fa-pencil"></i></button></span></dt>
+				<dd>
+					<span class="inline_text_container">{{ageText}}</span>
+					<span class="inline_text_container">{{heightText}}</span>
+					<span class="inline_text_container">{{weightText}}</span>
+					<span class="inline_text_container">{{ethnicityText}}</span>
+				</dd>
+				<dt>{{relationshipText}}open to<span class="edit-button-container"><button type="button" class="btn btn-block btn-main btn-edit" data-toggle="modal" data-target="#profileOpenToChangeModal"><i class="fa fa-pencil"></i></button></span></dt>
+				<dd>{{openToListText}}</dd>
+				<dt>Looking for<span class="edit-button-container"><button type="button" class="btn btn-block btn-main btn-edit" data-toggle="modal" data-target="#profileLookforDialog"><i class="fa fa-pencil"></i></button></span></dt>
+				<dd>{{lookingforText}}</dd>
+				<dt>About me<span class="edit-button-container"><button type="button" class="btn btn-block btn-main btn-edit" data-toggle="modal" data-target="#profileAboutMeDialog"><i class="fa fa-pencil"></i></button></span></dt>
+				<dd>{{descriptionText}}</dd>
+				<dt>My interests<span class="edit-button-container"><button type="button" class="btn btn-block btn-main btn-edit" data-toggle="modal" data-target="#profileMyInterestDialog"><i class="fa fa-pencil"></i></button></span></dt>
+				<dd>{{interestsText}}</dd>
+			</dl>
+				
+		</div>
+	</div>
+</div>
+
+<div class="primary-photo-opaque">
+	<img data-ng-src="{{currentViewPhoto}}" class="img-responsive" />
+</div>
